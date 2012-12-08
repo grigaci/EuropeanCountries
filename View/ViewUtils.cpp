@@ -82,6 +82,7 @@ namespace EuropeanCountries
 		const int height)
 	{
 		NativeUI::Label* label = new NativeUI::Label();
+		label->setTextHorizontalAlignment(MAW_ALIGNMENT_LEFT);
 		label->setText(text);
 		label->setWidth(width);
 		label->setHeight(height);
