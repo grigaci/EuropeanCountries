@@ -23,6 +23,8 @@
  * @brief Util methods and constants for NativeUI widgets.
  */
 
+#define LABEL_MAX_LINES 100
+
 #include <NativeUI/Label.h>
 #include <NativeUI/VerticalLayout.h>
 
@@ -84,7 +86,7 @@ namespace EuropeanCountries
 		label->setWidth(width);
 		label->setHeight(height);
 		label->setFontColor(fontColor);
-		label->setMaxNumberOfLines(0);
+		label->setMaxNumberOfLines(LABEL_MAX_LINES);
 		return label;
 	}
 
