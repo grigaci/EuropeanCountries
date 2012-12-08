@@ -1,0 +1,80 @@
+/*
+ Copyright (C) 2012 MoSync AB
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License,
+ version 2, as published by the Free Software Foundation.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301, USA.
+ */
+
+/**
+ * @file ViewUtils.h
+ * @author Bogdan Iusco
+ *
+ * @brief Util methods and constants for NativeUI widgets.
+ */
+
+#ifndef VIEW_UTILS_H_
+#define VIEW_UTILS_H_
+
+#define COLOR_BLACK 0x000000
+#define COLOR_WHITE 0xFFFFFF
+#define COLOR_LABEL_INFO 0x00FF00
+#define COLOR_LABEL_DATA 0xFFFFFF
+
+#define SPACER_HEIGHT 30
+
+#include <IX_WIDGET.h>
+#include <MAUtil/String.h>
+
+namespace NativeUI
+{
+	class Label;
+	class VerticalLayout;
+}
+
+namespace EuropeanCountries
+{
+	/**
+	 * Screen size.
+	 */
+	extern int gScreenWidth;
+	extern int gScreenHeight;
+
+	/**
+	 * Create an NativeUI Label object with given values.
+	 * @param text Text to set.
+	 * @param fontColor Text font color.
+	 * @param width Label's width in pixels or size constant.
+	 * @param height Label's height in pixels or size constant.
+	 * @return The created label object. Its ownership is passed to the caller.
+	 */
+	NativeUI::Label* createLabel(
+		const MAUtil::String& text = "",
+		const int fontColor = COLOR_LABEL_DATA,
+		const int width =  MAW_CONSTANT_FILL_AVAILABLE_SPACE,
+		const int height = MAW_CONSTANT_WRAP_CONTENT);
+
+
+	/**
+	 * Create an empty transparent VerticalLayout widget.
+	 * @param height Layout's height.
+	 * @param width Layout's width.
+	 * @return The layout. Its ownership is passed to the caller.
+	 */
+	NativeUI::VerticalLayout* createSpacer(
+		const int height = SPACER_HEIGHT,
+		const int width = MAW_CONSTANT_FILL_AVAILABLE_SPACE);
+
+} // end of EuropeanCountries
+
+#endif /* VIEW_UTILS_H_ */

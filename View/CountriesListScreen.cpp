@@ -1,0 +1,191 @@
+/*
+ Copyright (C) 2012 MoSync AB
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License,
+ version 2, as published by the Free Software Foundation.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ MA 02110-1301, USA.
+ */
+
+/**
+ * @file CountriesListScreen.cpp
+ * @author Bogdan Iusco
+ *
+ * @brief NativeUI Screen used to show a list of countries.
+ */
+
+#include <NativeUI/Image.h>
+#include <NativeUI/ListView.h>
+#include <NativeUI/ListViewSection.h>
+#include <NativeUI/ListViewItem.h>
+#include <NativeUI/RelativeLayout.h>
+#include <MAUtil/String.h>
+
+#include "MAHeaders.h"
+#include "ViewUtils.h"
+#include "CountriesListScreen.h"
+#include "CountriesListScreenObserver.h"
+#include "../Model/ICountryDatabase.h"
+#include "../Model/Country.h"
+
+namespace EuropeanCountries
+{
+
+	/**
+	 * Constructor.
+	 * @param database Used to read data.
+	 * @param observer Will be notified when user selects a country from list.
+	 */
+	CountriesListScreen::CountriesListScreen(
+		ICountryDatabase& database,
+		CountriesListScreenObserver& observer):
+		mDatabase(database),
+		mObserver(observer),
+		mMainLayout(NULL)
+	{
+		this->createUI();
+		mListView->addListViewListener(this);
+	}
+
+	/**
+	 * Destructor.
+	 */
+	CountriesListScreen::~CountriesListScreen()
+	{
+		mListView->removeListViewListener(this);
+	}
+
+	/**
+	 * This method is called when an alphabetical list view item is clicked.
+	 * From ListViewListener.
+	 * @param listView The list view object that generated the event.
+	 * @param listViewSection The ListViewSection object that contains the selected item.
+	 * @param listViewItem The ListViewItem objet clicked.
+	 */
+	void CountriesListScreen::segmentedListViewItemClicked(
+		NativeUI::ListView* listView,
+		NativeUI::ListViewSection* listViewSection,
+		NativeUI::ListViewItem* listViewItem)
+	{
+		int countryID = mCountryMap[listViewItem->getWidgetHandle()];
+		mObserver.showCountryInfoScreen(countryID);
+	}
+
+	/**
+	 * Create screen UI.
+	 */
+	void CountriesListScreen::createUI()
+	{
+		mMainLayout = new NativeUI::RelativeLayout();
+		this->setMainWidget(mMainLayout);
+
+		this->createImageWidget();
+		this->createListViewWidget();
+		this->addDataToListView();
+	}
+
+	/**
+	 * Create and add an Image widget to the screen's main layout.
+	 * It will take the screen size.
+	 */
+	void CountriesListScreen::createImageWidget()
+	{
+		NativeUI::Image* imageWidget = new NativeUI::Image();
+		imageWidget->setHeight(this->getHeight());
+		imageWidget->setWidth(this->getWidth());
+		imageWidget->setTopPosition(0);
+		imageWidget->setLeftPosition(0);
+		imageWidget->setImage(R_COUNTRIES_LIST_SCREEN_BG);
+		imageWidget->setScaleMode(NativeUI::IMAGE_SCALE_XY);
+		mMainLayout->addChild(imageWidget);
+	}
+
+	/**
+	 * Create and add an ListView widget to the screen's main layout.
+	 * It will take the screen size and will be placed above the image widget.
+	 */
+	void CountriesListScreen::createListViewWidget()
+	{
+		mListView = new NativeUI::ListView(
+			NativeUI::LIST_VIEW_TYPE_ALPHABETICAL);
+		mListView->setHeight(this->getHeight());
+		mListView->setWidth(this->getWidth());
+		mListView->setTopPosition(0);
+		mListView->setLeftPosition(0);
+		mListView->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+		mMainLayout->addChild(mListView);
+
+//		char sectionInfo = 'A';
+//		for (int i = 0; i <= 24; i++)
+//		{
+//			NativeUI::ListViewSection* section = new NativeUI::ListViewSection(
+//				NativeUI::LIST_VIEW_SECTION_TYPE_ALPHABETICAL);
+//			MAUtil::String text;
+//			text[0] = sectionInfo;
+//			section->setTitle(text);
+//			section->setHeaderText(text);
+//			mListView->addChild(section);
+//
+//			NativeUI::ListViewItem* item = new NativeUI::ListViewItem();
+//			item->setText(text);
+//			item->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+//			section->addItem(item);
+//
+//			sectionInfo++;
+//		}
+	}
+
+	/**
+	 * Add data from database into list view.
+	 */
+	void CountriesListScreen::addDataToListView()
+	{
+		mCountryMap.clear();
+		NativeUI::ListViewSection* section = NULL;
+		MAUtil::String sectionTitle("A");
+
+		int countCountries = mDatabase.countCountries();
+		for (int index = 0; index < countCountries; index++)
+		{
+			Country* country = mDatabase.getCountryByIndex(index);
+			if (!country)
+			{
+				continue;
+			}
+			MAUtil::String countryName = country->getName();
+			if (countryName.length() == 0)
+			{
+				continue;
+			}
+			if (!section || countryName[0] != sectionTitle[0])
+			{
+				sectionTitle[0] = countryName[0];
+				section = new NativeUI::ListViewSection(
+					NativeUI::LIST_VIEW_SECTION_TYPE_ALPHABETICAL);
+				section->setTitle(sectionTitle);
+				section->setHeaderText(sectionTitle);
+				mListView->addChild(section);
+			}
+
+			NativeUI::ListViewItem* item = new NativeUI::ListViewItem();
+			item->setText(countryName);
+			item->setFontColor(COLOR_WHITE);
+			item->setSelectionStyle(NativeUI::LIST_VIEW_ITEM_SELECTION_STYLE_GRAY);
+			item->setIcon(country->getFlagID());
+			section->addItem(item);
+
+			mCountryMap.insert(item->getWidgetHandle(), country->getID());
+		}
+	}
+
+} // end of EuropeanCountries
+
