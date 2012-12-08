@@ -52,6 +52,10 @@ namespace EuropeanCountries
 		mObserver(observer),
 		mMainLayout(NULL)
 	{
+		if (isIOS())
+		{
+			initScreenSizeConstants(this->getWidth(), this->getHeight());
+		}
 		this->createUI();
 		mListView->addListViewListener(this);
 	}
@@ -117,31 +121,12 @@ namespace EuropeanCountries
 	{
 		mListView = new NativeUI::ListView(
 			NativeUI::LIST_VIEW_TYPE_ALPHABETICAL);
-		mListView->setHeight(this->getHeight());
-		mListView->setWidth(this->getWidth());
+		mListView->setHeight(gScreenHeight);
+		mListView->setWidth(gScreenWidth);
 		mListView->setTopPosition(0);
 		mListView->setLeftPosition(0);
 		mListView->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
 		mMainLayout->addChild(mListView);
-
-//		char sectionInfo = 'A';
-//		for (int i = 0; i <= 24; i++)
-//		{
-//			NativeUI::ListViewSection* section = new NativeUI::ListViewSection(
-//				NativeUI::LIST_VIEW_SECTION_TYPE_ALPHABETICAL);
-//			MAUtil::String text;
-//			text[0] = sectionInfo;
-//			section->setTitle(text);
-//			section->setHeaderText(text);
-//			mListView->addChild(section);
-//
-//			NativeUI::ListViewItem* item = new NativeUI::ListViewItem();
-//			item->setText(text);
-//			item->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
-//			section->addItem(item);
-//
-//			sectionInfo++;
-//		}
 	}
 
 	/**

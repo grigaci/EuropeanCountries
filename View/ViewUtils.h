@@ -51,6 +51,19 @@ namespace EuropeanCountries
 	extern int gScreenHeight;
 
 	/**
+	 * Init global screen size constants.
+	 * On Android and WP7 platforms should be used with default param value,
+	 * while on iOS should be called with screen width and height values.
+	 * @param width Width to set. If it's zero, maGetScrSize() syscall will be used
+	 * to get the real value.
+	 * @param height Height to set. If it's zero, maGetScrSize() syscall will be used
+	 * to get the real value.
+	 */
+	void initScreenSizeConstants(
+		const int width = 0,
+		const int height = 0);
+
+	/**
 	 * Create an NativeUI Label object with given values.
 	 * @param text Text to set.
 	 * @param fontColor Text font color.
@@ -74,6 +87,24 @@ namespace EuropeanCountries
 	NativeUI::VerticalLayout* createSpacer(
 		const int height = SPACER_HEIGHT,
 		const int width = MAW_CONSTANT_FILL_AVAILABLE_SPACE);
+
+	/**
+	 * Detects if the current platform is Android.
+	 * @return true if the platform is Android, false otherwise.
+	 */
+	bool isAndroid();
+
+	/**
+	 * Detects if the current platform is iOS.
+	 * @return true if the platform is iOS, false otherwise.
+	 */
+	bool isIOS();
+
+	/**
+	 * Detects if the current platform is Windows Phone.
+	 * @return true if the platform is Windows Phone, false otherwise.
+	 */
+	bool isWindowsPhone();
 
 } // end of EuropeanCountries
 

@@ -30,7 +30,7 @@
 #include "../Model/Country.h"
 #include "../View/CountriesListScreen.h"
 #include "../View/CountryInfoScreen.h"
-
+#include "../View/ViewUtils.h"
 
 namespace EuropeanCountries
 {
@@ -42,6 +42,8 @@ namespace EuropeanCountries
 		mCountriesListScreen(NULL),
 		mCountryInfoScreen(NULL)
 	{
+		initScreenSizeConstants();
+
 		mDatabaseManager = new DatabaseManager();
 		mDatabaseManager->readDataFromFiles();
 		mCountriesListScreen = new CountriesListScreen(*mDatabaseManager, *this);

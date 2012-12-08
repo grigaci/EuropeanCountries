@@ -62,11 +62,13 @@ namespace EuropeanCountries
 		mAreaLabel(NULL),
 		mLanguagesLabel(NULL),
 		mGovernmentLabel(NULL),
-		mCapitalLabel(NULL)
+		mCapitalLabel(NULL),
+		mInfoLayoutWidth(0)
 	{
-		gScreenWidth = this->getWidth();
-		gScreenHeight = this->getHeight();
-
+		if (isIOS())
+		{
+			initScreenSizeConstants(this->getWidth(), this->getHeight());
+		}
 		this->createUI();
 		mBackButton->addButtonListener(this);
 	}
@@ -141,7 +143,7 @@ namespace EuropeanCountries
 	void CountryInfoScreen::createImageWidget()
 	{
 		NativeUI::Image* image = new NativeUI::Image();
-		image->setHeight(this->getHeight());
+		image->setHeight(gScreenHeight);
 		image->setWidth(gScreenWidth);
 		image->setTopPosition(0);
 		image->setLeftPosition(0);
@@ -198,10 +200,10 @@ namespace EuropeanCountries
 		mMainLayout->addChild(mInfoLayoutRelative);
 
 		int paddingLeft = gScreenWidth * PADDING_LEFT_PERCENTAGE / 100;
-		printf("paddingLeft = %d", paddingLeft);
+		mInfoLayoutWidth = gScreenWidth - (2 * paddingLeft);
 
 		mInfoLayout = new NativeUI::VerticalLayout();
-		mInfoLayout->setWidth(gScreenWidth - paddingLeft);
+		mInfoLayout->setWidth(mInfoLayoutWidth);
 		mInfoLayout->wrapContentVertically();
 		mInfoLayout->setTopPosition(0);
 		mInfoLayout->setLeftPosition(paddingLeft);
@@ -217,11 +219,11 @@ namespace EuropeanCountries
 	{
 		mInfoLayout->addChild(createSpacer());
 		NativeUI::Label* countryTextLabel = createLabel(
-			POPULATION_LABEL_TEXT, COLOR_LABEL_INFO);
+			POPULATION_LABEL_TEXT, COLOR_LABEL_INFO, mInfoLayoutWidth);
 		mInfoLayout->addChild(countryTextLabel);
 		mInfoLayout->addChild(createSpacer());
 
-		mPopulationLabel = createLabel("", COLOR_LABEL_DATA, gScreenWidth);
+		mPopulationLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mPopulationLabel);
 	}
 
@@ -232,11 +234,12 @@ namespace EuropeanCountries
 	void CountryInfoScreen::createAreaLabel()
 	{
 		mInfoLayout->addChild(createSpacer());
-		NativeUI::Label* areaTextLabel = createLabel(AREA_LABEL_TEXT, COLOR_LABEL_INFO);
+		NativeUI::Label* areaTextLabel =
+			createLabel(AREA_LABEL_TEXT, COLOR_LABEL_INFO, mInfoLayoutWidth);
 		mInfoLayout->addChild(areaTextLabel);
 		mInfoLayout->addChild(createSpacer());
 
-		mAreaLabel = createLabel("", COLOR_LABEL_DATA, gScreenWidth);
+		mAreaLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mAreaLabel);
 	}
 
@@ -248,11 +251,11 @@ namespace EuropeanCountries
 	{
 		mInfoLayout->addChild(createSpacer());
 		NativeUI::Label* languagesTextLabel = createLabel(
-			LANGUAGES_LABEL_TEXT, COLOR_LABEL_INFO);
+			LANGUAGES_LABEL_TEXT, COLOR_LABEL_INFO, mInfoLayoutWidth);
 		mInfoLayout->addChild(languagesTextLabel);
 		mInfoLayout->addChild(createSpacer());
 
-		mLanguagesLabel = createLabel("", COLOR_LABEL_DATA, gScreenWidth);
+		mLanguagesLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mLanguagesLabel);
 	}
 
@@ -264,11 +267,11 @@ namespace EuropeanCountries
 	{
 		mInfoLayout->addChild(createSpacer());
 		NativeUI::Label* governmentTextLabel = createLabel(
-			GOVERNMENT_LABEL_TEXT, COLOR_LABEL_INFO);
+			GOVERNMENT_LABEL_TEXT, COLOR_LABEL_INFO, mInfoLayoutWidth);
 		mInfoLayout->addChild(governmentTextLabel);
 		mInfoLayout->addChild(createSpacer());
 
-		mGovernmentLabel = createLabel("", COLOR_LABEL_DATA, gScreenWidth);
+		mGovernmentLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mGovernmentLabel);
 	}
 
@@ -280,11 +283,11 @@ namespace EuropeanCountries
 	{
 		mInfoLayout->addChild(createSpacer());
 		NativeUI::Label* capitalTextLabel = createLabel(
-			CAPITAL_LABEL_TEXT, COLOR_LABEL_INFO);
+			CAPITAL_LABEL_TEXT, COLOR_LABEL_INFO, mInfoLayoutWidth);
 		mInfoLayout->addChild(capitalTextLabel);
 		mInfoLayout->addChild(createSpacer());
 
-		mCapitalLabel = createLabel("", COLOR_LABEL_DATA, gScreenWidth);
+		mCapitalLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mCapitalLabel);
 	}
 

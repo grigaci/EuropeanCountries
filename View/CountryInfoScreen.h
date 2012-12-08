@@ -195,6 +195,11 @@ namespace EuropeanCountries
 		 */
 		NativeUI::Label* mCapitalLabel;
 
+		/**
+		 * Width value for info layout and its children.
+		 */
+		int mInfoLayoutWidth;
+
 	}; // end of CountryInfoScreen
 
 } // end of EuropeanCountries

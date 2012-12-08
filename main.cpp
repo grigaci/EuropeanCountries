@@ -41,7 +41,6 @@ namespace EuropeanCountries
 		 */
 		NativeUIMoblet()
 		{
-
 			mController = new EuropeanCountries::Controller();
 		}
 

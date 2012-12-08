@@ -38,6 +38,34 @@ namespace EuropeanCountries
 	int gScreenHeight = 0;
 
 	/**
+	 * Init global screen size constants.
+	 * On Android and WP7 platforms should be used with default param value,
+	 * while on iOS should be called with screen width and height values.
+	 * @param width Width to set. If it's zero, maGetScrSize() syscall will be used
+	 * to get the real value.
+	 * @param height Height to set. If it's zero, maGetScrSize() syscall will be used
+	 * to get the real value.
+	 */
+	void initScreenSizeConstants(
+		const int width,
+		const int height)
+	{
+		MAExtent screenSize = maGetScrSize();
+		gScreenWidth = width;
+		if  (gScreenWidth == 0)
+		{
+			gScreenWidth = EXTENT_X(screenSize);
+		}
+
+		gScreenHeight = height;
+		if (gScreenHeight == 0)
+		{
+			gScreenHeight = EXTENT_X(screenSize);
+		}
+		printf("gScreenWidth = %d gScreenHeight = %d", gScreenWidth, gScreenHeight);
+	}
+
+	/**
 	 * Create an NativeUI Label object with given values.
 	 * @param text Text to set.
 	 * @param fontColor Text font color.
@@ -75,6 +103,63 @@ namespace EuropeanCountries
 		layout->setWidth(width);
 		layout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
 		return layout;
+	}
+
+	/**
+	 * Detects if the current platform is Android.
+	 * @return true if the platform is Android, false otherwise.
+	 */
+	bool isAndroid()
+	{
+		char platform[NativeUI::BUF_SIZE];
+		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
+		if ( strcmp(platform,"Android") == 0 )
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Detects if the current platform is iOS.
+	 * @return true if the platform is iOS, false otherwise.
+	 */
+	bool isIOS()
+	{
+		char platform[NativeUI::BUF_SIZE];
+		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
+		for (unsigned int i = 0; i < strlen(platform); i++)
+		{
+			platform[i] = tolower(platform[i]);
+		}
+		if (strstr(platform,"iphone") != NULL)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Detects if the current platform is Windows Phone.
+	 * @return true if the platform is Windows Phone, false otherwise.
+	 */
+	bool isWindowsPhone()
+	{
+		char platform[NativeUI::BUF_SIZE];
+		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
+		for (unsigned int i = 0; i < strlen(platform); i++)
+		{
+			platform[i] = tolower(platform[i]);
+		}
+		if (strstr(platform,"microsoft") != NULL &&
+			strstr(platform,"windows") != NULL)
+		{
+			return true;
+		}
+
+		return false;
 	}
 
 } // end of EuropeanCountries
