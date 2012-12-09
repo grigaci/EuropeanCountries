@@ -25,6 +25,8 @@
 
 #define PADDING_LEFT_PERCENTAGE 2
 
+#define TITLE_BAR_HEIGHT_PERCENTAGE 11
+
 #define POPULATION_LABEL_TEXT "Population"
 #define AREA_LABEL_TEXT "Area"
 #define LANGUAGES_LABEL_TEXT "Languages"
@@ -158,7 +160,7 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::createTitleBar()
 	{
-		int barHeight = gScreenHeight / 11;
+		int barHeight = gScreenHeight / TITLE_BAR_HEIGHT_PERCENTAGE;
 		mTitleBarLayout = new NativeUI::HorizontalLayout();
 		mTitleBarLayout->setLeftPosition(0);
 		mTitleBarLayout->setTopPosition(0);
