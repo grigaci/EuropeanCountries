@@ -74,7 +74,11 @@ namespace EuropeanCountries
 			initScreenSizeConstants(this->getWidth(), this->getHeight());
 		}
 		this->createUI();
-		mBackButton->addButtonListener(this);
+
+		if (!isAndroid())
+		{
+			mBackButton->addButtonListener(this);
+		}
 	}
 
 	/**
@@ -82,7 +86,10 @@ namespace EuropeanCountries
 	 */
 	CountryInfoScreen::~CountryInfoScreen()
 	{
-		mBackButton->removeButtonListener(this);
+		if (!isAndroid())
+		{
+			mBackButton->removeButtonListener(this);
+		}
 	}
 
 	/**
@@ -190,14 +197,13 @@ namespace EuropeanCountries
 		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "50000000");
 		mDataLayout->addChild(mTitleBarLayout);
 
-		mBackButton = new NativeUI::ImageButton();
-		mBackButton->setHeight(barHeight);
-		mBackButton->setImage(R_BACK_BUTTON);
-		if (isAndroid())
+		if (!isAndroid())
 		{
-			mBackButton->setWidth(BACK_BUTTON_WIDTH);
+			mBackButton = new NativeUI::ImageButton();
+			mBackButton->setHeight(barHeight);
+			mBackButton->setImage(R_BACK_BUTTON);
+			mTitleBarLayout->addChild(mBackButton);
 		}
-		mTitleBarLayout->addChild(mBackButton);
 
 		mNameLabel = new NativeUI::Label();
 		mNameLabel->setTextHorizontalAlignment(MAW_ALIGNMENT_CENTER);
@@ -207,8 +213,11 @@ namespace EuropeanCountries
 		mNameLabel->setFontColor(COLOR_WHITE);
 		mTitleBarLayout->addChild(mNameLabel);
 
+		if (!isAndroid())
+		{
 		mTitleBarLayout->addChild(
 			createSpacer(mNameLabel->getHeight(), BACK_BUTTON_WIDTH));
+		}
 	}
 
 	/**

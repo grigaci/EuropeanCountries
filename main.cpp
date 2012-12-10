@@ -51,10 +51,10 @@ namespace EuropeanCountries
 		{
 			if (MAK_BACK == keyCode || MAK_0 == keyCode)
 			{
-				// Call close to exit the application.
-				close();
+				mController->backButtonPressed();
 			}
 		}
+
 	private:
 		/**
 		 * Application controller.

@@ -28,6 +28,12 @@
 
 #include "../View/CountriesListScreenObserver.h"
 #include "../View/CountryInfoScreenObserver.h"
+
+namespace NativeUI
+{
+	class Screen;
+}
+
 namespace EuropeanCountries
 {
 
@@ -52,6 +58,11 @@ namespace EuropeanCountries
 		virtual ~Controller();
 
 		/**
+		 * Handle the back button action.
+		 */
+		void backButtonPressed();
+
+		/**
 		 * Show country info.
 		 * Called after the user selects an country from the list.
 		 * From CountriesListScreenObserver.
@@ -68,6 +79,13 @@ namespace EuropeanCountries
 
 	private:
 		/**
+		 * Show a given NativeUI Screen.
+		 * @param screen Screen to show.
+		 */
+		void showScreen(NativeUI::Screen& screen);
+
+	private:
+		/**
 		 * Used to read data from files.
 		 */
 		DatabaseManager* mDatabaseManager;
@@ -81,6 +99,12 @@ namespace EuropeanCountries
 		 * Screen used to display country info.
 		 */
 		CountryInfoScreen* mCountryInfoScreen;
+
+		/**
+		 * Points to the currently visible screen.
+		 * Not owns the pointed object.
+		 */
+		NativeUI::Screen* mCurrentlyShownScreen;
 
 	}; // end of Controller
 

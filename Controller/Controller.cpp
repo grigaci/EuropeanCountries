@@ -23,6 +23,8 @@
  * @brief Application controller.
  */
 
+#include <NativeUI/Screen.h>
+#include <MAUtil/Moblet.h>
 #include <conprint.h>
 
 #include "Controller.h"
@@ -40,7 +42,8 @@ namespace EuropeanCountries
 	Controller::Controller():
 		mDatabaseManager(NULL),
 		mCountriesListScreen(NULL),
-		mCountryInfoScreen(NULL)
+		mCountryInfoScreen(NULL),
+		mCurrentlyShownScreen(NULL)
 	{
 		initScreenSizeConstants();
 
@@ -49,7 +52,7 @@ namespace EuropeanCountries
 		mCountriesListScreen = new CountriesListScreen(*mDatabaseManager, *this);
 		mCountryInfoScreen = new CountryInfoScreen(*this);
 
-		mCountriesListScreen->show();
+		this->showScreen(*mCountriesListScreen);
 	}
 
 	/**
@@ -60,6 +63,21 @@ namespace EuropeanCountries
 		delete mDatabaseManager;
 		delete mCountriesListScreen;
 		delete mCountryInfoScreen;
+	}
+
+	/**
+	 * Handle the back button action.
+	 */
+	void Controller::backButtonPressed()
+	{
+		if (mCurrentlyShownScreen == mCountryInfoScreen)
+		{
+			this->showScreen(*mCountriesListScreen);
+		}
+		else
+		{
+			MAUtil::Moblet::close();
+		}
 	}
 
 	/**
@@ -77,7 +95,7 @@ namespace EuropeanCountries
 			return;
 		}
 		mCountryInfoScreen->setDisplayedCountry(*country);
-		mCountryInfoScreen->show();
+		this->showScreen(*mCountryInfoScreen);
 	}
 
 	/**
@@ -87,7 +105,17 @@ namespace EuropeanCountries
 	 */
 	void Controller::showCountriesListScreen()
 	{
-		mCountriesListScreen->show();
+		this->showScreen(*mCountriesListScreen);
+	}
+
+	/**
+	 * Show a given NativeUI Screen.
+	 * @param screen Screen to show.
+	 */
+	void Controller::showScreen(NativeUI::Screen& screen)
+	{
+		mCurrentlyShownScreen = &screen;
+		mCurrentlyShownScreen->show();
 	}
 
 } // end of EuropeanCountries
