@@ -76,6 +76,8 @@ namespace EuropeanCountries
 		delete mDatabaseManager;
 		delete mCountriesListScreen;
 		delete mCountryInfoScreen;
+		delete mTransitionInfoScreen;
+		delete mTransitionListScreen;
 	}
 
 	/**
