@@ -64,7 +64,6 @@ namespace EuropeanCountries
 		{
 			gScreenHeight = EXTENT_Y(screenSize);
 		}
-		printf("gScreenWidth = %d gScreenHeight = %d", gScreenWidth, gScreenHeight);
 	}
 
 	/**

@@ -24,8 +24,9 @@
  */
 
 #define PADDING_LEFT_PERCENTAGE 2
-
+#define BACK_BUTTON_WIDTH 64
 #define TITLE_BAR_HEIGHT_PERCENTAGE 11
+#define MAX_TITLE_BAR_HEIGHT 70
 
 #define POPULATION_LABEL_TEXT "Population"
 #define AREA_LABEL_TEXT "Area"
@@ -56,6 +57,7 @@ namespace EuropeanCountries
 	CountryInfoScreen::CountryInfoScreen(CountryInfoScreenObserver& observer):
 		mObserver(observer),
 		mMainLayout(NULL),
+		mDataLayout(NULL),
 		mTitleBarLayout(NULL),
 		mInfoLayout(NULL),
 		mNameLabel(NULL),
@@ -127,6 +129,21 @@ namespace EuropeanCountries
 		this->setMainWidget(mMainLayout);
 
 		this->createImageWidget();
+
+		if (isAndroid())
+		{
+			mDataLayout = new NativeUI::VerticalLayout();
+			mDataLayout->setHeight(gScreenHeight);
+			mDataLayout->setWidth(gScreenWidth);
+			mDataLayout->setTopPosition(0);
+			mDataLayout->setLeftPosition(0);
+			mMainLayout->addChild(mDataLayout);
+		}
+		else
+		{
+			mDataLayout = mMainLayout;
+		}
+
 		this->createTitleBar();
 		this->createInfoLayout();
 
@@ -161,28 +178,37 @@ namespace EuropeanCountries
 	void CountryInfoScreen::createTitleBar()
 	{
 		int barHeight = gScreenHeight / TITLE_BAR_HEIGHT_PERCENTAGE;
+		if (barHeight > MAX_TITLE_BAR_HEIGHT)
+		{
+			barHeight = MAX_TITLE_BAR_HEIGHT;
+		}
 		mTitleBarLayout = new NativeUI::HorizontalLayout();
 		mTitleBarLayout->setLeftPosition(0);
 		mTitleBarLayout->setTopPosition(0);
 		mTitleBarLayout->setWidth(gScreenWidth);
 		mTitleBarLayout->setHeight(barHeight);
 		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "50000000");
-		mMainLayout->addChild(mTitleBarLayout);
+		mDataLayout->addChild(mTitleBarLayout);
 
 		mBackButton = new NativeUI::ImageButton();
 		mBackButton->setHeight(barHeight);
 		mBackButton->setImage(R_BACK_BUTTON);
+		if (isAndroid())
+		{
+			mBackButton->setWidth(BACK_BUTTON_WIDTH);
+		}
 		mTitleBarLayout->addChild(mBackButton);
 
 		mNameLabel = new NativeUI::Label();
 		mNameLabel->setTextHorizontalAlignment(MAW_ALIGNMENT_CENTER);
+		mNameLabel->setTextVerticalAlignment(MAW_ALIGNMENT_CENTER);
 		mNameLabel->fillSpaceHorizontally();
 		mNameLabel->fillSpaceVertically();
 		mNameLabel->setFontColor(COLOR_WHITE);
 		mTitleBarLayout->addChild(mNameLabel);
 
 		mTitleBarLayout->addChild(
-			createSpacer(mNameLabel->getHeight(), mBackButton->getWidth()));
+			createSpacer(mNameLabel->getHeight(), BACK_BUTTON_WIDTH));
 	}
 
 	/**
@@ -191,15 +217,18 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::createInfoLayout()
 	{
-		int titleBarHeight = mTitleBarLayout->getHeight();
-		mInfoLayoutRelative = new NativeUI::RelativeLayout();
-		mInfoLayoutRelative->setTopPosition(titleBarHeight);
-		mInfoLayoutRelative->setLeftPosition(0);
-		int height = gScreenHeight - titleBarHeight;
-		mInfoLayoutRelative->setHeight(height);
-		mInfoLayoutRelative->setWidth(gScreenWidth);
-		mInfoLayoutRelative->setScrollable(true);
-		mMainLayout->addChild(mInfoLayoutRelative);
+		if (isIOS())
+		{
+			int titleBarHeight = mTitleBarLayout->getHeight();
+			mInfoLayoutRelative = new NativeUI::RelativeLayout();
+			mInfoLayoutRelative->setTopPosition(titleBarHeight);
+			mInfoLayoutRelative->setLeftPosition(0);
+			int height = gScreenHeight - titleBarHeight;
+			mInfoLayoutRelative->setHeight(height);
+			mInfoLayoutRelative->setWidth(gScreenWidth);
+			mInfoLayoutRelative->setScrollable(true);
+			mDataLayout->addChild(mInfoLayoutRelative);
+		}
 
 		int paddingLeft = gScreenWidth * PADDING_LEFT_PERCENTAGE / 100;
 		mInfoLayoutWidth = gScreenWidth - (2 * paddingLeft);
@@ -208,9 +237,18 @@ namespace EuropeanCountries
 		mInfoLayout->setWidth(mInfoLayoutWidth);
 		mInfoLayout->wrapContentVertically();
 		mInfoLayout->setTopPosition(0);
+		mInfoLayout->setScrollable(true);
 		mInfoLayout->setLeftPosition(paddingLeft);
 		mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
-		mInfoLayoutRelative->addChild(mInfoLayout);
+		if (isAndroid())
+		{
+			mInfoLayout->setPaddingLeft(paddingLeft);
+			mDataLayout->addChild(mInfoLayout);
+		}
+		else
+		{
+			mInfoLayoutRelative->addChild(mInfoLayout);
+		}
 	}
 
 	/**

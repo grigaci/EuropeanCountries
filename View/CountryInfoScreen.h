@@ -146,6 +146,13 @@ namespace EuropeanCountries
 		NativeUI::RelativeLayout* mMainLayout;
 
 		/**
+		 * Will contain the title bar and info label.
+		 * Covers the main layout.
+		 * Only for Android platform.
+		 */
+		NativeUI::Widget* mDataLayout;
+
+		/**
 		 * Show the back button.
 		 */
 		NativeUI::HorizontalLayout* mTitleBarLayout;
@@ -157,6 +164,7 @@ namespace EuropeanCountries
 
 		/**
 		 * Relative layout where label containing country info are added.
+		 * For iOS and WP7 platforms.
 		 */
 		NativeUI::RelativeLayout* mInfoLayoutRelative;
 
