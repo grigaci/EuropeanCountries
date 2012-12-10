@@ -164,9 +164,15 @@ namespace EuropeanCountries
 
 		/**
 		 * Relative layout where label containing country info are added.
-		 * For iOS and WP7 platforms.
+		 * For iOS.
 		 */
 		NativeUI::RelativeLayout* mInfoLayoutRelative;
+
+		/**
+		 * Vertical layout where label containing country info are added.
+		 * For wp7.
+		 */
+		NativeUI::VerticalLayout* mInfoLayoutVertical;
 
 		/**
 		 * Contains labels used to display info about the country.

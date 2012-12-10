@@ -97,7 +97,10 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::show()
 	{
-		mInfoLayoutRelative->setContentOffset(0, 0);
+		if (isIOS())
+		{
+			mInfoLayoutRelative->setContentOffset(0, 0);
+		}
 		NativeUI::Screen::show();
 	}
 
@@ -226,17 +229,26 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::createInfoLayout()
 	{
+		int titleBarHeight = mTitleBarLayout->getHeight();
+		int height = gScreenHeight - titleBarHeight;
 		if (isIOS())
 		{
-			int titleBarHeight = mTitleBarLayout->getHeight();
 			mInfoLayoutRelative = new NativeUI::RelativeLayout();
 			mInfoLayoutRelative->setTopPosition(titleBarHeight);
 			mInfoLayoutRelative->setLeftPosition(0);
-			int height = gScreenHeight - titleBarHeight;
 			mInfoLayoutRelative->setHeight(height);
 			mInfoLayoutRelative->setWidth(gScreenWidth);
 			mInfoLayoutRelative->setScrollable(true);
 			mDataLayout->addChild(mInfoLayoutRelative);
+		}
+		else if (isWindowsPhone())
+		{
+			mInfoLayoutVertical = new NativeUI::VerticalLayout();
+			mInfoLayoutVertical->setTopPosition(titleBarHeight);
+			mInfoLayoutVertical->setLeftPosition(0);
+			mInfoLayoutVertical->setHeight(height);
+			mInfoLayoutVertical->setWidth(gScreenWidth);
+			mDataLayout->addChild(mInfoLayoutVertical);
 		}
 
 		int paddingLeft = gScreenWidth * PADDING_LEFT_PERCENTAGE / 100;
@@ -244,19 +256,25 @@ namespace EuropeanCountries
 
 		mInfoLayout = new NativeUI::VerticalLayout();
 		mInfoLayout->setWidth(mInfoLayoutWidth);
-		mInfoLayout->wrapContentVertically();
 		mInfoLayout->setTopPosition(0);
 		mInfoLayout->setScrollable(true);
 		mInfoLayout->setLeftPosition(paddingLeft);
 		mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+
 		if (isAndroid())
 		{
 			mInfoLayout->setPaddingLeft(paddingLeft);
+			mInfoLayout->wrapContentVertically();
 			mDataLayout->addChild(mInfoLayout);
 		}
-		else
+		else if (isIOS())
 		{
+			mInfoLayout->wrapContentVertically();
 			mInfoLayoutRelative->addChild(mInfoLayout);
+		}
+		else if (isWindowsPhone())
+		{
+			mInfoLayoutVertical->addChild(mInfoLayout);
 		}
 	}
 
