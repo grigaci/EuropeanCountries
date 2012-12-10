@@ -32,6 +32,7 @@
 namespace NativeUI
 {
 	class Screen;
+	class ScreenTransition;
 }
 
 namespace EuropeanCountries
@@ -105,6 +106,16 @@ namespace EuropeanCountries
 		 * Not owns the pointed object.
 		 */
 		NativeUI::Screen* mCurrentlyShownScreen;
+
+		/**
+		 * Transition used to show CountriesListScreen.
+		 */
+		NativeUI::ScreenTransition* mTransitionListScreen;
+
+		/**
+		 * Transition used to show CountryInfoScreen.
+		 */
+		NativeUI::ScreenTransition* mTransitionInfoScreen;
 
 	}; // end of Controller
 

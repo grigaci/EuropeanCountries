@@ -23,7 +23,10 @@
  * @brief Application controller.
  */
 
+#define TRANSITION_DURATION 500
+
 #include <NativeUI/Screen.h>
+#include <NativeUI/ScreenTransition.h>
 #include <MAUtil/Moblet.h>
 #include <conprint.h>
 
@@ -43,9 +46,19 @@ namespace EuropeanCountries
 		mDatabaseManager(NULL),
 		mCountriesListScreen(NULL),
 		mCountryInfoScreen(NULL),
-		mCurrentlyShownScreen(NULL)
+		mCurrentlyShownScreen(NULL),
+		mTransitionListScreen(NULL),
+		mTransitionInfoScreen(NULL)
 	{
 		initScreenSizeConstants();
+
+		mTransitionListScreen = new NativeUI::ScreenTransition(
+			MA_TRANSITION_TYPE_FLIP_FROM_LEFT,
+			TRANSITION_DURATION);
+
+		mTransitionInfoScreen = new NativeUI::ScreenTransition(
+			MA_TRANSITION_TYPE_FLIP_FROM_RIGHT,
+			TRANSITION_DURATION);
 
 		mDatabaseManager = new DatabaseManager();
 		mDatabaseManager->readDataFromFiles();
@@ -114,6 +127,14 @@ namespace EuropeanCountries
 	 */
 	void Controller::showScreen(NativeUI::Screen& screen)
 	{
+		if (&screen == mCountriesListScreen)
+		{
+			NativeUI::Screen::setActiveScreenTransition(mTransitionListScreen);
+		}
+		else if (&screen == mCountryInfoScreen)
+		{
+			NativeUI::Screen::setActiveScreenTransition(mTransitionInfoScreen);
+		}
 		mCurrentlyShownScreen = &screen;
 		mCurrentlyShownScreen->show();
 	}
