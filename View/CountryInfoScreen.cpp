@@ -100,6 +100,7 @@ namespace EuropeanCountries
 		if (isIOS())
 		{
 			mInfoLayoutRelative->setContentOffset(0, 0);
+			mBackButton->setImage(R_BACK_BUTTON);
 		}
 		NativeUI::Screen::show();
 	}
