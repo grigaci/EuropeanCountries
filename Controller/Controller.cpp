@@ -33,6 +33,7 @@
 #include "../View/CountriesListScreen.h"
 #include "../View/CountryInfoScreen.h"
 #include "../View/DisclaimerScreen.h"
+#include "../View/LoadingScreen.h"
 #include "../View/ViewUtils.h"
 
 namespace EuropeanCountries
@@ -49,6 +50,12 @@ namespace EuropeanCountries
 	{
 		initScreenSizeConstants();
 
+		LoadingScreen* loadingScreen = new LoadingScreen();
+		if (isWindowsPhone())
+		{
+			loadingScreen->show();
+		}
+
 		mDatabaseManager = new DatabaseManager();
 		mDatabaseManager->readDataFromFiles();
 		mCountriesListScreen = new CountriesListScreen(*mDatabaseManager, *this);
@@ -56,6 +63,7 @@ namespace EuropeanCountries
 		mDisclaimerScreen = new DisclaimerScreen(*this);
 
 		this->showScreen(*mCountriesListScreen);
+		delete loadingScreen;
 	}
 
 	/**
@@ -147,4 +155,3 @@ namespace EuropeanCountries
 	}
 
 } // end of EuropeanCountries
-
