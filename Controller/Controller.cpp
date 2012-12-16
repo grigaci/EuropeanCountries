@@ -32,6 +32,7 @@
 #include "../Model/Country.h"
 #include "../View/CountriesListScreen.h"
 #include "../View/CountryInfoScreen.h"
+#include "../View/DisclaimerScreen.h"
 #include "../View/ViewUtils.h"
 
 namespace EuropeanCountries
@@ -43,6 +44,7 @@ namespace EuropeanCountries
 		mDatabaseManager(NULL),
 		mCountriesListScreen(NULL),
 		mCountryInfoScreen(NULL),
+		mDisclaimerScreen(NULL),
 		mCurrentlyShownScreen(NULL)
 	{
 		initScreenSizeConstants();
@@ -51,6 +53,7 @@ namespace EuropeanCountries
 		mDatabaseManager->readDataFromFiles();
 		mCountriesListScreen = new CountriesListScreen(*mDatabaseManager, *this);
 		mCountryInfoScreen = new CountryInfoScreen(*this);
+		mDisclaimerScreen = new DisclaimerScreen(*this);
 
 		this->showScreen(*mCountriesListScreen);
 	}
@@ -63,6 +66,7 @@ namespace EuropeanCountries
 		delete mDatabaseManager;
 		delete mCountriesListScreen;
 		delete mCountryInfoScreen;
+		delete mDisclaimerScreen;
 	}
 
 	/**
@@ -73,6 +77,10 @@ namespace EuropeanCountries
 		if (mCurrentlyShownScreen == mCountryInfoScreen)
 		{
 			this->showScreen(*mCountriesListScreen);
+		}
+		else if (mCurrentlyShownScreen == mDisclaimerScreen)
+		{
+			this->showScreen(*mCountryInfoScreen);
 		}
 		else
 		{
@@ -106,6 +114,26 @@ namespace EuropeanCountries
 	void Controller::showCountriesListScreen()
 	{
 		this->showScreen(*mCountriesListScreen);
+	}
+
+	/**
+	 * Show disclaimer screen.
+	 * Called when user taps the info button.
+	 * From CountryInfoScreenObserver.
+	 */
+	void Controller::showDisclaimerScreen()
+	{
+		this->showScreen(*mDisclaimerScreen);
+	}
+
+	/**
+	 * Show country info screen.
+	 * Called when user taps the back button.
+	 * From DisclaimerScreenObserver.
+	 */
+	void Controller::showCountryInfoScreen()
+	{
+		this->showScreen(*mCountryInfoScreen);
 	}
 
 	/**

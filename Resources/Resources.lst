@@ -158,3 +158,5 @@
 .res R_BACK_BUTTON
 .image "Back_Button.png"
 
+.res R_INFO_BUTTON
+.image "Info.png"

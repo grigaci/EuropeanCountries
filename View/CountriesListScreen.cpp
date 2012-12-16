@@ -85,6 +85,16 @@ namespace EuropeanCountries
 	}
 
 	/**
+	 * Show a screen. Only one screen at a time is visible.
+	 * The previous screen will be hidden when showing a screen.
+	 */
+	void CountriesListScreen::show()
+	{
+		mListView->requestFocus();
+		NativeUI::Screen::show();
+	}
+
+	/**
 	 * Create screen UI.
 	 */
 	void CountriesListScreen::createUI()

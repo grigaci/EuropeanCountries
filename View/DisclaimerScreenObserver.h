@@ -17,33 +17,27 @@
  */
 
 /**
- * @file CountryInfoScreenObserver.h
+ * @file DisclaimerScreenObserver.h
  * @author Bogdan Iusco
  *
- * @brief Observer for CountryInfoScreenObserver.
+ * @brief Observer for DisclaimerScreen.
  */
 
-#ifndef COUNTRY_INFO_SCREEN_OBSERVER_H_
-#define COUNTRY_INFO_SCREEN_OBSERVER_H_
+#ifndef DISCLAIMER_SCREEN_OBSERVER_H_
+#define DISCLAIMER_SCREEN_OBSERVER_H_
 
 namespace EuropeanCountries
 {
-	class CountryInfoScreenObserver
+	class DisclaimerScreenObserver
 	{
 	public:
 		/**
-		 * Show countries list screen.
+		 * Show country info screen.
 		 * Called when user taps the back button.
 		 */
-		virtual void showCountriesListScreen() = 0;
-
-		/**
-		 * Show disclaimer screen.
-		 * Called when user taps the info button.
-		 */
-		virtual void showDisclaimerScreen() = 0;
+		virtual void showCountryInfoScreen() = 0;
 	};
 
 } // end of EuropeanCountries
 
-#endif /* COUNTRY_INFO_SCREEN_OBSERVER_H_ */
+#endif /* DISCLAIMERSCREENOBSERVER_H_ */

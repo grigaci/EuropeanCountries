@@ -28,6 +28,7 @@
 
 #include "../View/CountriesListScreenObserver.h"
 #include "../View/CountryInfoScreenObserver.h"
+#include "../View/DisclaimerScreenObserver.h"
 
 namespace NativeUI
 {
@@ -41,10 +42,12 @@ namespace EuropeanCountries
 	class CountriesListScreen;
 	class CountryInfoScreen;
 	class DatabaseManager;
+	class DisclaimerScreen;
 
 	class Controller:
 		public CountriesListScreenObserver,
-		public CountryInfoScreenObserver
+		public CountryInfoScreenObserver,
+		public DisclaimerScreenObserver
 	{
 	public:
 		/**
@@ -77,6 +80,20 @@ namespace EuropeanCountries
 		 */
 		virtual void showCountriesListScreen();
 
+		/**
+		 * Show disclaimer screen.
+		 * Called when user taps the info button.
+		 * From CountryInfoScreenObserver.
+		 */
+		virtual void showDisclaimerScreen();
+
+		/**
+		 * Show country info screen.
+		 * Called when user taps the back button.
+		 * From DisclaimerScreenObserver.
+		 */
+		virtual void showCountryInfoScreen();
+
 	private:
 		/**
 		 * Show a given NativeUI Screen.
@@ -99,6 +116,11 @@ namespace EuropeanCountries
 		 * Screen used to display country info.
 		 */
 		CountryInfoScreen* mCountryInfoScreen;
+
+		/**
+		 * Screen used to display the disclaimer.
+		 */
+		DisclaimerScreen* mDisclaimerScreen;
 
 		/**
 		 * Points to the currently visible screen.

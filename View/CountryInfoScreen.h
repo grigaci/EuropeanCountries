@@ -31,6 +31,7 @@
 
 namespace NativeUI
 {
+	class Button;
 	class HorizontalLayout;
 	class ImageButton;
 	class Label;
@@ -133,6 +134,12 @@ namespace EuropeanCountries
 		 */
 		void createCapitalLabel();
 
+		/**
+		 * Create and add button used to show the disclaimer screen.
+		 * Only for Android platform.
+		 */
+		void createDisclaimerButton();
+
 	private:
 
 		/**
@@ -185,6 +192,12 @@ namespace EuropeanCountries
 		NativeUI::ImageButton* mBackButton;
 
 		/**
+		 * Used to show the disclaimer screen.
+		 * Only on iOS and WP7 platforms.
+		 */
+		NativeUI::ImageButton* mDisclaimerTitleBarButton;
+
+		/**
 		 * Used to show the country's population to the user.
 		 */
 		NativeUI::Label* mPopulationLabel;
@@ -208,6 +221,12 @@ namespace EuropeanCountries
 		 * Used to show the country's capital to the user.
 		 */
 		NativeUI::Label* mCapitalLabel;
+
+		/**
+		 * Used to show the disclaimer screen.
+		 * Only on Android platform.
+		 */
+		NativeUI::Button* mDisclaimerScrollAreaButton;
 
 		/**
 		 * Width value for info layout and its children.

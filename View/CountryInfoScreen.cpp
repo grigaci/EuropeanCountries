@@ -34,7 +34,9 @@
 #define GOVERNMENT_LABEL_TEXT "Government"
 #define CAPITAL_LABEL_TEXT "Capital"
 
+#define DISCLAIMER_BUTTON_TEXT "Disclaimer"
 
+#include <NativeUI/Button.h>
 #include <NativeUI/HorizontalLayout.h>
 #include <NativeUI/Label.h>
 #include <NativeUI/Image.h>
@@ -62,11 +64,13 @@ namespace EuropeanCountries
 		mInfoLayout(NULL),
 		mNameLabel(NULL),
 		mBackButton(NULL),
+		mDisclaimerTitleBarButton(NULL),
 		mPopulationLabel(NULL),
 		mAreaLabel(NULL),
 		mLanguagesLabel(NULL),
 		mGovernmentLabel(NULL),
 		mCapitalLabel(NULL),
+		mDisclaimerScrollAreaButton(NULL),
 		mInfoLayoutWidth(0)
 	{
 		if (isIOS())
@@ -75,9 +79,14 @@ namespace EuropeanCountries
 		}
 		this->createUI();
 
-		if (!isAndroid())
+		if (isAndroid())
+		{
+			mDisclaimerScrollAreaButton->addButtonListener(this);
+		}
+		else
 		{
 			mBackButton->addButtonListener(this);
+			mDisclaimerTitleBarButton->addButtonListener(this);
 		}
 	}
 
@@ -86,9 +95,14 @@ namespace EuropeanCountries
 	 */
 	CountryInfoScreen::~CountryInfoScreen()
 	{
-		if (!isAndroid())
+		if (isAndroid())
+		{
+			mDisclaimerScrollAreaButton->removeButtonListener(this);
+		}
+		else
 		{
 			mBackButton->removeButtonListener(this);
+			mDisclaimerTitleBarButton->removeButtonListener(this);
 		}
 	}
 
@@ -128,7 +142,15 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::buttonClicked(NativeUI::Widget* button)
 	{
-		mObserver.showCountriesListScreen();
+		if (mBackButton == button)
+		{
+			mObserver.showCountriesListScreen();
+		}
+		else if (mDisclaimerTitleBarButton == button ||
+				 mDisclaimerScrollAreaButton == button)
+		{
+			mObserver.showDisclaimerScreen();
+		}
 	}
 
 	/**
@@ -163,6 +185,11 @@ namespace EuropeanCountries
 		this->createLanguagesLabel();
 		this->createGovernmentLabel();
 		this->createCapitalLabel();
+
+		if (isAndroid())
+		{
+			this->createDisclaimerButton();
+		}
 
 		mInfoLayout->addChild(createSpacer());
 	}
@@ -219,8 +246,13 @@ namespace EuropeanCountries
 
 		if (!isAndroid())
 		{
-		mTitleBarLayout->addChild(
-			createSpacer(mNameLabel->getHeight(), BACK_BUTTON_WIDTH));
+			mDisclaimerTitleBarButton = new NativeUI::ImageButton();
+			mDisclaimerTitleBarButton->setHeight(barHeight);
+			mDisclaimerTitleBarButton->setImage(R_INFO_BUTTON);
+
+			int spacerWidth = mNameLabel->getHeight() - mDisclaimerTitleBarButton->getHeight();
+			mTitleBarLayout->addChild(createSpacer(mNameLabel->getHeight(), spacerWidth));
+			mTitleBarLayout->addChild(mDisclaimerTitleBarButton);
 		}
 	}
 
@@ -357,6 +389,20 @@ namespace EuropeanCountries
 
 		mCapitalLabel = createLabel("", COLOR_LABEL_DATA, mInfoLayoutWidth);
 		mInfoLayout->addChild(mCapitalLabel);
+	}
+
+	/**
+	 * Create and add button used to show the disclaimer screen.
+	 * Only for Android platform.
+	 */
+	void CountryInfoScreen::createDisclaimerButton()
+	{
+		mInfoLayout->addChild(createSpacer());
+		mDisclaimerScrollAreaButton = new NativeUI::Button();
+		mDisclaimerScrollAreaButton->setText(DISCLAIMER_BUTTON_TEXT);
+		mDisclaimerScrollAreaButton->setWidth(mInfoLayoutWidth);
+		mDisclaimerScrollAreaButton->wrapContentVertically();
+		mInfoLayout->addChild(mDisclaimerScrollAreaButton);
 	}
 
 } // end of EuropeanCountries

@@ -83,6 +83,12 @@ namespace EuropeanCountries
 			NativeUI::ListView* listView,
 			NativeUI::ListViewItem* listViewItem) {};
 
+		/**
+		 * Show a screen. Only one screen at a time is visible.
+		 * The previous screen will be hidden when showing a screen.
+		 */
+		virtual void show();
+
 	private:
 		/**
 		 * Create screen UI.
