@@ -253,8 +253,11 @@ namespace EuropeanCountries
 			mDisclaimerTitleBarButton->setHeight(barHeight);
 			mDisclaimerTitleBarButton->setImage(R_DISCLAIMER_BUTTON);
 
-			int spacerWidth = mNameLabel->getHeight() - mDisclaimerTitleBarButton->getHeight();
-			mTitleBarLayout->addChild(createSpacer(mNameLabel->getHeight(), spacerWidth));
+			if (isIOS())
+			{
+				int spacerWidth = mBackButton->getWidth() - barHeight;
+				mTitleBarLayout->addChild(createSpacer(mNameLabel->getHeight(), spacerWidth));
+			}
 			mTitleBarLayout->addChild(mDisclaimerTitleBarButton);
 		}
 	}
