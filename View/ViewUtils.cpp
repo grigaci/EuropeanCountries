@@ -108,16 +108,8 @@ namespace EuropeanCountries
 		}
 
 		// Set background color variables.
-		if (isWindowsPhone())
-		{
-			gLayoutBackgroundColor = "000000";
-			gTitleBackgroundColor  = "000000";
-		}
-		else
-		{
-			gLayoutBackgroundColor = "00000000";
-			gTitleBackgroundColor  = "50000000";
-		}
+		gLayoutBackgroundColor = "00000000";
+		gTitleBackgroundColor  = "50000000";
 	}
 
 	/**
@@ -157,7 +149,10 @@ namespace EuropeanCountries
 		NativeUI::VerticalLayout* layout = new NativeUI::VerticalLayout();
 		layout->setHeight(height);
 		layout->setWidth(width);
-		layout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
+		if (!isWindowsPhone())
+		{
+			layout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
+		}
 		return layout;
 	}
 

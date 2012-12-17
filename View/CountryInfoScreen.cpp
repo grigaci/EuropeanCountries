@@ -225,7 +225,6 @@ namespace EuropeanCountries
 		mTitleBarLayout->setTopPosition(0);
 		mTitleBarLayout->setWidth(gScreenWidth);
 		mTitleBarLayout->setHeight(barHeight);
-		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		mDataLayout->addChild(mTitleBarLayout);
 
 		if (!isAndroid())
@@ -234,6 +233,10 @@ namespace EuropeanCountries
 			mBackButton->setHeight(barHeight);
 			mBackButton->setImage(R_BACK_BUTTON);
 			mTitleBarLayout->addChild(mBackButton);
+		}
+		if (!isWindowsPhone())
+		{
+			mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		}
 
 		mNameLabel = new NativeUI::Label();
@@ -292,18 +295,19 @@ namespace EuropeanCountries
 		mInfoLayout->setTopPosition(0);
 		mInfoLayout->setScrollable(true);
 		mInfoLayout->setLeftPosition(paddingLeft);
-		mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 
 		if (isAndroid())
 		{
 			mInfoLayout->setPaddingLeft(paddingLeft);
 			mInfoLayout->wrapContentVertically();
+			mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 			mDataLayout->addChild(mInfoLayout);
 		}
 		else if (isIOS())
 		{
 			mInfoLayout->wrapContentVertically();
 			mInfoLayoutRelative->addChild(mInfoLayout);
+			mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 		}
 		else if (isWindowsPhone())
 		{

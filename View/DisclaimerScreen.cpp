@@ -125,7 +125,6 @@ namespace EuropeanCountries
 		mTitleBarLayout->setTopPosition(0);
 		mTitleBarLayout->setWidth(gScreenWidth);
 		mTitleBarLayout->setHeight(mTitleBarHeight);
-		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		mMainLayout->addChild(mTitleBarLayout);
 
 		if (!isAndroid())
@@ -134,6 +133,10 @@ namespace EuropeanCountries
 			mBackButton->setHeight(mTitleBarHeight);
 			mBackButton->setImage(R_BACK_BUTTON);
 			mTitleBarLayout->addChild(mBackButton);
+		}
+		if (!isWindowsPhone())
+		{
+			mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		}
 
 		mTitleLabel = new NativeUI::Label();
