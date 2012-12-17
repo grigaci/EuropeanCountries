@@ -23,16 +23,18 @@
  * @brief Database manager used to read data from JSON files.
  */
 
-#define BUNDLE_CHECKSUM "UEProjectChecksum"
+#define CHECKSUM_BUF_SIZE 128
+
+#define BUNDLE_CHECKSUM "ECProjectChecksum"
 #define COUNTRY_TABLE_FILE_NAME "CountryTable"
 
 #include <conprint.h>
+#include <mastdlib.h>
+#include <yajl/YAJLDom.h>
 #include <Wormhole/FileUtil.h>
 
-#include <yajl/YAJLDom.h>
-
-#include "DatabaseManager.h"
 #include "Country.h"
+#include "DatabaseManager.h"
 #include "ModelUtils.h"
 
 namespace EuropeanCountries
@@ -112,27 +114,30 @@ namespace EuropeanCountries
 	 */
 	void DatabaseManager::readCountryTableFile()
 	{
+		// Reset array.
 		mCountryFileNames.clear();
+
+		// Open CountryTable file.
 		MAUtil::String filePath = mFileUtil->getLocalPath() + COUNTRY_TABLE_FILE_NAME;
-//		printf("filePath is %s", filePath.c_str());
 		MAUtil::String fileContent;
 		if (!mFileUtil->readTextFromFile(filePath, fileContent))
 		{
 			printf("Cannot read text from CountryTable");
 			return;
 		}
-//		printf("File CountryTable: %s", fileContent.c_str());
+
+		//Read file content.
 		MAUtil::YAJLDom::Value* root = MAUtil::YAJLDom::parse(
 			(const unsigned char*)fileContent.c_str(), fileContent.size());
-
-		MAUtil::YAJLDom::Value* countries = root->getValueForKey("countries");
+		MAUtil::YAJLDom::Value* countries = root->getValueForKey(sCountriesKey);
 		MAUtil::YAJLDom::ArrayValue* countriesArray = (MAUtil::YAJLDom::ArrayValue*) countries;
 		MAUtil::Vector<MAUtil::YAJLDom::Value*> allCountries = countriesArray->getValues();
+
+		// Get all country files that we should read next.
 		for (int index = 0; index < allCountries.size(); index++)
 		{
 			MAUtil::YAJLDom::Value* countryValue = allCountries[index];
 			MAUtil::String countryFileName = countryValue->toString();
-//			printf("Country file to read: %s", countryFileName.c_str());
 			mCountryFileNames.add(countryFileName);
 		}
 		delete root;
@@ -158,18 +163,18 @@ namespace EuropeanCountries
 	 */
 	void DatabaseManager::readCountryFile(MAUtil::String& countryFileName)
 	{
+		// Open and read file content.
 		MAUtil::String filePath = mFileUtil->getLocalPath() + countryFileName;
-//		printf("filePath is %s", filePath.c_str());
 		MAUtil::String fileContent;
 		if (!mFileUtil->readTextFromFile(filePath, fileContent))
 		{
 			printf("Cannot read text from %s", filePath.c_str());
 			return;
 		}
-//		printf("File %s: %s",countryFileName.c_str(), fileContent.c_str());
+
+		// Extract JSON values.
 		MAUtil::YAJLDom::Value* root = MAUtil::YAJLDom::parse(
 			(const unsigned char*)fileContent.c_str(), fileContent.size());
-
 		MAUtil::String name = root->getValueForKey(sCountryNameKey)->toString();
 		int flagID = root->getValueForKey(sCountryFlagIDKey)->toInt();
 		MAUtil::String population = root->getValueForKey(sCountryPopulationKey)->toString();
@@ -178,6 +183,7 @@ namespace EuropeanCountries
 		MAUtil::String government = root->getValueForKey(sCountryGovernmentKey)->toString();
 		MAUtil::String capital = root->getValueForKey(sCountryCapitalKey)->toString();
 
+		// Create and fill Country object with read data.
 		Country* country = new Country();
 		country->setName(name);
 		country->setFlagID(flagID);
@@ -186,11 +192,12 @@ namespace EuropeanCountries
 		country->setLanguages(languages);
 		country->setGovernment(government);
 		country->setCapital(capital);
-		country->print();
 
+		// Add object to map and array.
 		mCountriesMap.insert(country->getID(), country);
 		mCountriesArray.add(country);
 
+		// Delete JSON root object.
 		delete root;
 	}
 
@@ -232,8 +239,8 @@ namespace EuropeanCountries
 		if (mFileUtil->readTextFromFile(filePath, data))
 		{
 			// Read from file succeeded. Compare values.
-//			int existingChecksum = (int)strtol(data.c_str(), NULL, 10);
-//			hasChanged = checksum != existingChecksum;
+			int existingChecksum = (int)strtol(data.c_str(), NULL, 10);
+			hasChanged = checksum != existingChecksum;
 		}
 
 		return hasChanged;
@@ -254,7 +261,7 @@ namespace EuropeanCountries
 		// Save checksum value.
 		if (checksum != 0)
 		{
-			char checksumBuf[128];
+			char checksumBuf[CHECKSUM_BUF_SIZE];
 			sprintf(checksumBuf, "%d", checksum);
 			mFileUtil->writeTextToFile(filePath, checksumBuf);
 		}

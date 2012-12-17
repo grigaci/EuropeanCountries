@@ -23,8 +23,8 @@
  * @brief Database manager used to read data from JSON files.
  */
 
-#ifndef DATABASE_MANAGER_H_
-#define DATABASE_MANAGER_H_
+#ifndef EC_DATABASE_MANAGER_H_
+#define EC_DATABASE_MANAGER_H_
 
 #include <MAUtil/Map.h>
 #include <MAUtil/String.h>
@@ -32,6 +32,7 @@
 
 #include "ICountryDatabase.h"
 
+// Forward declarations for Wormhole namespace classes.
 namespace Wormhole
 {
 	class FileUtil;
@@ -40,8 +41,12 @@ namespace Wormhole
 namespace EuropeanCountries
 {
 
+	// Forward declarations for EuropeanCountries namespace classes.
 	class Country;
 
+	/**
+	 * @brief Handles read operation from files.
+	 */
 	class DatabaseManager:
 		public ICountryDatabase
 	{
@@ -105,7 +110,6 @@ namespace EuropeanCountries
 		 */
 		void readCountryFile(MAUtil::String& countryFileName);
 
-
 		/**
 		 * Extract LocalFile.bin to the local file system.
 		 * Files will be extracted only if the checksum does not match.
@@ -152,4 +156,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* DATABASE_MANAGER_H_ */
+#endif /* EC_DATABASE_MANAGER_H_ */

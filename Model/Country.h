@@ -23,8 +23,8 @@
  * @brief Class used to store information about a country.
  */
 
-#ifndef COUNTRY_H_
-#define COUNTRY_H_
+#ifndef EC_COUNTRY_H_
+#define EC_COUNTRY_H_
 
 #include <MAUtil/String.h>
 
@@ -136,12 +136,6 @@ namespace EuropeanCountries
 		 */
 		MAUtil::String getCapital() const;
 
-		/**
-		 * Print its data into console.
-		 * For debugging purpose only.
-		 */
-		void print();
-
 	private:
 
 		/**
@@ -189,4 +183,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* COUNTRY_H_ */
+#endif /* EC_COUNTRY_H_ */

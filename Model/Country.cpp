@@ -23,8 +23,6 @@
  * @brief Class used to store information about a country.
  */
 
-#include <conprint.h>
-
 #include "Country.h"
 
 namespace EuropeanCountries
@@ -183,18 +181,4 @@ namespace EuropeanCountries
 		return mCapital;
 	}
 
-	/**`
-	 * Print its data into console.
-	 * For debugging purpose only.
-	 */
-	void Country::print()
-	{
-//		printf("Country: %s\n Population: %s\n Area: %s\n Languages: %s\n, Government: %s\n Capital: %s\n\n",
-//				mName.c_str(),
-//				mPopulation.c_str(),
-//				mArea.c_str(),
-//				mLanguages.c_str(),
-//				mGovernment.c_str(),
-//				mCapital.c_str());
-	}
 } // end of EuropeanCountries

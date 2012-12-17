@@ -204,7 +204,7 @@ namespace EuropeanCountries
 		image->setWidth(gScreenWidth);
 		image->setTopPosition(0);
 		image->setLeftPosition(0);
-		image->setImage(R_COUNTRIES_LIST_SCREEN_BG);
+		image->setImage(R_SCREEN_BACKGROUND);
 		image->setScaleMode(NativeUI::IMAGE_SCALE_XY);
 		mMainLayout->addChild(image);
 	}
@@ -248,7 +248,7 @@ namespace EuropeanCountries
 		{
 			mDisclaimerTitleBarButton = new NativeUI::ImageButton();
 			mDisclaimerTitleBarButton->setHeight(barHeight);
-			mDisclaimerTitleBarButton->setImage(R_INFO_BUTTON);
+			mDisclaimerTitleBarButton->setImage(R_DISCLAIMER_BUTTON);
 
 			int spacerWidth = mNameLabel->getHeight() - mDisclaimerTitleBarButton->getHeight();
 			mTitleBarLayout->addChild(createSpacer(mNameLabel->getHeight(), spacerWidth));

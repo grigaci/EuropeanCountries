@@ -26,9 +26,10 @@
  */
 
 #define LOADING_LABEL_TEXT "Loading..."
-#define SPACER_HEIGHT 15
 
 #include <NativeUI/ActivityIndicator.h>
+#include <NativeUI/Label.h>
+#include <NativeUI/VerticalLayout.h>
 
 #include "LoadingScreen.h"
 #include "ViewUtils.h"

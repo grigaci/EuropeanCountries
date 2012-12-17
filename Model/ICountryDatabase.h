@@ -23,14 +23,17 @@
  * @brief Interface to database manager used to read data from JSON files.
  */
 
-#ifndef I_COUNTRY_DATABASE_H_
-#define I_COUNTRY_DATABASE_H_
+#ifndef EC_I_COUNTRY_DATABASE_H_
+#define EC_I_COUNTRY_DATABASE_H_
 
 namespace EuropeanCountries
 {
-
+	// Forward declaration.
 	class Country;
 
+	/**
+	 * @brief Interface to database manager used to read data from JSON files.
+	 */
 	class ICountryDatabase
 	{
 	public:
@@ -60,4 +63,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* I_COUNTRY_DATABASE_H_ */
+#endif /* EC_I_COUNTRY_DATABASE_H_ */

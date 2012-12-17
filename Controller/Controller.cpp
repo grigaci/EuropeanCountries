@@ -28,8 +28,8 @@
 #include <conprint.h>
 
 #include "Controller.h"
-#include "../Model/DatabaseManager.h"
 #include "../Model/Country.h"
+#include "../Model/DatabaseManager.h"
 #include "../View/CountriesListScreen.h"
 #include "../View/CountryInfoScreen.h"
 #include "../View/DisclaimerScreen.h"
@@ -49,20 +49,29 @@ namespace EuropeanCountries
 		mCurrentlyShownScreen(NULL)
 	{
 		initScreenSizeConstants();
+		initPlatformType();
 
-		LoadingScreen* loadingScreen = new LoadingScreen();
+		LoadingScreen* loadingScreen = NULL;
 		if (isWindowsPhone())
 		{
+			// Show LoadingScreen.
+			loadingScreen = new LoadingScreen();
 			loadingScreen->show();
 		}
 
+		// Create and load the database.
 		mDatabaseManager = new DatabaseManager();
 		mDatabaseManager->readDataFromFiles();
+
+		// Create screens.
 		mCountriesListScreen = new CountriesListScreen(*mDatabaseManager, *this);
 		mCountryInfoScreen = new CountryInfoScreen(*this);
 		mDisclaimerScreen = new DisclaimerScreen(*this);
 
+		// Show the country list screen.
 		this->showScreen(*mCountriesListScreen);
+
+		// Delete the loading screen.
 		delete loadingScreen;
 	}
 
@@ -79,19 +88,27 @@ namespace EuropeanCountries
 
 	/**
 	 * Handle the back button action.
+	 * Show the previous screen, or exit the app if there's no
+	 * other screen to show.
+	 * Platform:  Android and WP7.
 	 */
 	void Controller::backButtonPressed()
 	{
 		if (mCurrentlyShownScreen == mCountryInfoScreen)
 		{
+			// The current screen is country info screen, so we go back to
+			// the countries list screen.
 			this->showScreen(*mCountriesListScreen);
 		}
 		else if (mCurrentlyShownScreen == mDisclaimerScreen)
 		{
+			// The current screen is disclaimer screen, so we go back to
+			// the country info screen.
 			this->showScreen(*mCountryInfoScreen);
 		}
 		else
 		{
+			// Exit the app.
 			MAUtil::Moblet::close();
 		}
 	}
@@ -104,13 +121,17 @@ namespace EuropeanCountries
 	 */
 	void Controller::showCountryInfoScreen(const int countryID)
 	{
+		// Check if the countrID param is valid.
 		Country* country = mDatabaseManager->getCountryByID(countryID);
 		if (!country)
 		{
-			printf("Controller::showCountryInfoScreen Invalid countryID %d", countryID);
 			return;
 		}
+
+		// Load data.
 		mCountryInfoScreen->setDisplayedCountry(*country);
+
+		// Show the screen.
 		this->showScreen(*mCountryInfoScreen);
 	}
 

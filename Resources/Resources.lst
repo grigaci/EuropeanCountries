@@ -152,11 +152,11 @@
 .res R_VATICAN_CITY_50
 .image "Flags/Vatican_City.png"
 
-.res R_COUNTRIES_LIST_SCREEN_BG
-.image "bg.png"
+.res R_SCREEN_BACKGROUND
+.image "Images/ScreenBackground.png"
 
 .res R_BACK_BUTTON
-.image "Back_Button.png"
+.image "Images/BackButton.png"
 
-.res R_INFO_BUTTON
-.image "Info.png"
+.res R_DISCLAIMER_BUTTON
+.image "Images/Disclaimer.png"

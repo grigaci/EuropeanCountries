@@ -23,13 +23,14 @@
  * @brief Application controller.
  */
 
-#ifndef CONTROLLER_H_
-#define CONTROLLER_H_
+#ifndef EC_CONTROLLER_H_
+#define EC_CONTROLLER_H_
 
 #include "../View/CountriesListScreenObserver.h"
 #include "../View/CountryInfoScreenObserver.h"
 #include "../View/DisclaimerScreenObserver.h"
 
+// Forward declarations for NativeUI namespace classes.
 namespace NativeUI
 {
 	class Screen;
@@ -38,12 +39,16 @@ namespace NativeUI
 namespace EuropeanCountries
 {
 
-	class Country;
+	// Forward declarations for NativeUI EuropeanCountries classes.
 	class CountriesListScreen;
+	class Country;
 	class CountryInfoScreen;
 	class DatabaseManager;
 	class DisclaimerScreen;
 
+	/**
+	 * @brief Application controller.
+	 */
 	class Controller:
 		public CountriesListScreenObserver,
 		public CountryInfoScreenObserver,
@@ -62,6 +67,9 @@ namespace EuropeanCountries
 
 		/**
 		 * Handle the back button action.
+		 * Show the previous screen, or exit the app if there's no
+		 * other screen to show.
+		 * Platform:  Android and WP7.
 		 */
 		void backButtonPressed();
 
@@ -132,4 +140,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* CONTROLLER_H_ */
+#endif /* EC_CONTROLLER_H_ */

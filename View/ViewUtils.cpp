@@ -40,6 +40,11 @@ namespace EuropeanCountries
 	int gScreenHeight = 0;
 
 	/**
+	 * Platform type.
+	 */
+	PlatformType gPlatformType;
+
+	/**
 	 * Init global screen size constants.
 	 * On Android and WP7 platforms should be used with default param value,
 	 * while on iOS should be called with screen width and height values.
@@ -63,6 +68,33 @@ namespace EuropeanCountries
 		if (gScreenHeight == 0)
 		{
 			gScreenHeight = EXTENT_Y(screenSize);
+		}
+	}
+
+	/**
+	 * Init platform type global variable.
+	 */
+	void initPlatformType()
+	{
+		char platform[NativeUI::BUF_SIZE];
+		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
+
+		for (unsigned int i = 0; i < strlen(platform); i++)
+		{
+			platform[i] = tolower(platform[i]);
+		}
+
+		if (strcmp(platform,"android") == 0)
+		{
+			gPlatformType = PlatformTypeAndroid;
+		}
+		else if (strstr(platform,"iphone") != NULL)
+		{
+			gPlatformType = PlatformTypeiOS;
+		}
+		else
+		{
+			gPlatformType = PlatformTypeWP7;
 		}
 	}
 
@@ -113,14 +145,7 @@ namespace EuropeanCountries
 	 */
 	bool isAndroid()
 	{
-		char platform[NativeUI::BUF_SIZE];
-		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
-		if ( strcmp(platform,"Android") == 0 )
-		{
-			return true;
-		}
-
-		return false;
+		return gPlatformType == PlatformTypeAndroid ? true : false;
 	}
 
 	/**
@@ -129,18 +154,7 @@ namespace EuropeanCountries
 	 */
 	bool isIOS()
 	{
-		char platform[NativeUI::BUF_SIZE];
-		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
-		for (unsigned int i = 0; i < strlen(platform); i++)
-		{
-			platform[i] = tolower(platform[i]);
-		}
-		if (strstr(platform,"iphone") != NULL)
-		{
-			return true;
-		}
-
-		return false;
+		return gPlatformType == PlatformTypeiOS ? true : false;
 	}
 
 	/**
@@ -149,19 +163,7 @@ namespace EuropeanCountries
 	 */
 	bool isWindowsPhone()
 	{
-		char platform[NativeUI::BUF_SIZE];
-		maGetSystemProperty("mosync.device.OS", platform, NativeUI::BUF_SIZE);
-		for (unsigned int i = 0; i < strlen(platform); i++)
-		{
-			platform[i] = tolower(platform[i]);
-		}
-		if (strstr(platform,"microsoft") != NULL &&
-			strstr(platform,"windows") != NULL)
-		{
-			return true;
-		}
-
-		return false;
+		return gPlatformType == PlatformTypeWP7 ? true : false;
 	}
 
 } // end of EuropeanCountries

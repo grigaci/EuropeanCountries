@@ -28,15 +28,20 @@
 namespace EuropeanCountries
 {
 
-/**
- * JSON keys for country files.
- */
-const char* sCountryNameKey = "Name";
-const char* sCountryFlagIDKey = "FlagID";
-const char* sCountryPopulationKey = "Population";
-const char* sCountryAreaKey = "Area";
-const char* sCountryLanguagesKey = "Languages";
-const char* sCountryGovernmentKey = "Government";
-const char* sCountryCapitalKey = "Capital";
+	/**
+	 * JSON key for CountryTable file.
+	 */
+	const char* sCountriesKey = "countries";
+
+	/**
+	 * JSON keys for country files.
+	 */
+	const char* sCountryNameKey = "Name";
+	const char* sCountryFlagIDKey = "FlagID";
+	const char* sCountryPopulationKey = "Population";
+	const char* sCountryAreaKey = "Area";
+	const char* sCountryLanguagesKey = "Languages";
+	const char* sCountryGovernmentKey = "Government";
+	const char* sCountryCapitalKey = "Capital";
 
 } // end of EuropeanCountries

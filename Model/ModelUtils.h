@@ -23,23 +23,28 @@
  * @brief Constants for model objects.
  */
 
-#ifndef MODEL_UTILS_H_
-#define MODEL_UTILS_H_
+#ifndef EC_MODEL_UTILS_H_
+#define EC_MODEL_UTILS_H_
 
 namespace EuropeanCountries
 {
 
-/**
- * JSON keys for country files.
- */
-extern const char* sCountryNameKey;
-extern const char* sCountryFlagIDKey;
-extern const char* sCountryPopulationKey;
-extern const char* sCountryAreaKey;
-extern const char* sCountryLanguagesKey;
-extern const char* sCountryGovernmentKey;
-extern const char* sCountryCapitalKey;
+	/**
+	 * JSON key for CountryTable file.
+	 */
+	extern const char* sCountriesKey;
+
+	/**
+	 * JSON keys for country files.
+	 */
+	extern const char* sCountryNameKey;
+	extern const char* sCountryFlagIDKey;
+	extern const char* sCountryPopulationKey;
+	extern const char* sCountryAreaKey;
+	extern const char* sCountryLanguagesKey;
+	extern const char* sCountryGovernmentKey;
+	extern const char* sCountryCapitalKey;
 
 } // end of EuropeanCountries
 
-#endif /* MODEL_UTILS_H_ */
+#endif /* EC_MODEL_UTILS_H_ */

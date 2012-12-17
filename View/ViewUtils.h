@@ -51,6 +51,18 @@ namespace EuropeanCountries
 	extern int gScreenHeight;
 
 	/**
+	 * Platform related values.
+	 */
+	enum PlatformType
+	{
+		PlatformTypeAndroid = 0,//!< PlatformTypeAndroid
+		PlatformTypeiOS,        //!< PlatformTypeiOS
+		PlatformTypeWP7         //!< PlatformTypeWP7
+	};
+
+	extern PlatformType gPlatformType;
+
+	/**
 	 * Init global screen size constants.
 	 * On Android and WP7 platforms should be used with default param value,
 	 * while on iOS should be called with screen width and height values.
@@ -62,6 +74,11 @@ namespace EuropeanCountries
 	void initScreenSizeConstants(
 		const int width = 0,
 		const int height = 0);
+
+	/**
+	 * Init platform type global variable.
+	 */
+	void initPlatformType();
 
 	/**
 	 * Create an NativeUI Label object with given values.

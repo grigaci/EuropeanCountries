@@ -108,7 +108,7 @@ namespace EuropeanCountries
 		imageWidget->setWidth(gScreenWidth);
 		imageWidget->setTopPosition(0);
 		imageWidget->setLeftPosition(0);
-		imageWidget->setImage(R_COUNTRIES_LIST_SCREEN_BG);
+		imageWidget->setImage(R_SCREEN_BACKGROUND);
 		imageWidget->setScaleMode(NativeUI::IMAGE_SCALE_XY);
 		mMainLayout->addChild(imageWidget);
 	}
