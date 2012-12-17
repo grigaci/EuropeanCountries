@@ -45,6 +45,16 @@ namespace EuropeanCountries
 	PlatformType gPlatformType;
 
 	/**
+	 * Background color for layouts.
+	 */
+	char* gLayoutBackgroundColor;
+
+	/**
+	 * Background color for title layout.
+	 */
+	char* gTitleBackgroundColor;
+
+	/**
 	 * Init global screen size constants.
 	 * On Android and WP7 platforms should be used with default param value,
 	 * while on iOS should be called with screen width and height values.
@@ -96,6 +106,18 @@ namespace EuropeanCountries
 		{
 			gPlatformType = PlatformTypeWP7;
 		}
+
+		// Set background color variables.
+		if (isWindowsPhone())
+		{
+			gLayoutBackgroundColor = "000000";
+			gTitleBackgroundColor  = "000000";
+		}
+		else
+		{
+			gLayoutBackgroundColor = "00000000";
+			gTitleBackgroundColor  = "50000000";
+		}
 	}
 
 	/**
@@ -135,7 +157,7 @@ namespace EuropeanCountries
 		NativeUI::VerticalLayout* layout = new NativeUI::VerticalLayout();
 		layout->setHeight(height);
 		layout->setWidth(width);
-		layout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+		layout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 		return layout;
 	}
 

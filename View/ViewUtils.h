@@ -63,6 +63,16 @@ namespace EuropeanCountries
 	extern PlatformType gPlatformType;
 
 	/**
+	 * Background color for layouts.
+	 */
+	extern char* gLayoutBackgroundColor;
+
+	/**
+	 * Background color for title layout.
+	 */
+	extern char* gTitleBackgroundColor;
+
+	/**
 	 * Init global screen size constants.
 	 * On Android and WP7 platforms should be used with default param value,
 	 * while on iOS should be called with screen width and height values.

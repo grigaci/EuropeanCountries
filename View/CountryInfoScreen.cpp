@@ -225,7 +225,7 @@ namespace EuropeanCountries
 		mTitleBarLayout->setTopPosition(0);
 		mTitleBarLayout->setWidth(gScreenWidth);
 		mTitleBarLayout->setHeight(barHeight);
-		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "50000000");
+		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		mDataLayout->addChild(mTitleBarLayout);
 
 		if (!isAndroid())
@@ -292,7 +292,7 @@ namespace EuropeanCountries
 		mInfoLayout->setTopPosition(0);
 		mInfoLayout->setScrollable(true);
 		mInfoLayout->setLeftPosition(paddingLeft);
-		mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+		mInfoLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 
 		if (isAndroid())
 		{

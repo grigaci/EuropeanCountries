@@ -125,7 +125,7 @@ namespace EuropeanCountries
 		mTitleBarLayout->setTopPosition(0);
 		mTitleBarLayout->setWidth(gScreenWidth);
 		mTitleBarLayout->setHeight(mTitleBarHeight);
-		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "50000000");
+		mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		mMainLayout->addChild(mTitleBarLayout);
 
 		if (!isAndroid())

@@ -135,7 +135,7 @@ namespace EuropeanCountries
 		mListView->setWidth(gScreenWidth);
 		mListView->setTopPosition(0);
 		mListView->setLeftPosition(0);
-		mListView->setProperty(MAW_WIDGET_BACKGROUND_COLOR, "00000000");
+		mListView->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gLayoutBackgroundColor);
 		mMainLayout->addChild(mListView);
 	}
 
