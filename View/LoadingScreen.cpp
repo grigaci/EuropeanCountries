@@ -51,16 +51,21 @@ namespace EuropeanCountries
 	 */
 	void LoadingScreen::createUI()
 	{
+		// Create and add main layout to the screen.
 		mMainLayout = new NativeUI::VerticalLayout();
 		this->setMainWidget(mMainLayout);
 
+		// Add spacer.
 		mMainLayout->addChild(new NativeUI::VerticalLayout);
+
+		// Add ActivityIndicatior.
 		NativeUI::ActivityIndicator* activityIndicator =
 			new NativeUI::ActivityIndicator();
 		mMainLayout->addChild(activityIndicator);
 
 		if (isWindowsPhone())
 		{
+			// For WP7 platform add an Label widget.
 			NativeUI::Label* loading = new NativeUI::Label(LOADING_LABEL_TEXT);
 			loading->setTextHorizontalAlignment(MAW_ALIGNMENT_CENTER);
 			loading->fillSpaceHorizontally();
@@ -74,7 +79,10 @@ namespace EuropeanCountries
 			mMainLayout->setChildHorizontalAlignment(MAW_ALIGNMENT_CENTER);
 		}
 
+		// Add spacer.
 		mMainLayout->addChild(new NativeUI::VerticalLayout);
+
+		// Show the ActivityIndicator.
 		activityIndicator->show();
 	}
 

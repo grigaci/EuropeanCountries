@@ -30,10 +30,10 @@
 #include <NativeUI/RelativeLayout.h>
 #include <MAUtil/String.h>
 
-#include "MAHeaders.h"
-#include "ViewUtils.h"
 #include "CountriesListScreen.h"
 #include "CountriesListScreenObserver.h"
+#include "MAHeaders.h"
+#include "ViewUtils.h"
 #include "../Model/ICountryDatabase.h"
 #include "../Model/Country.h"
 
@@ -147,25 +147,35 @@ namespace EuropeanCountries
 	 */
 	void CountriesListScreen::addDataToListView()
 	{
+		// Clear data from map.
 		mCountryMap.clear();
+
+		// Create first section.
 		NativeUI::ListViewSection* section = NULL;
 		MAUtil::String sectionTitle("A");
 
+		// For each country read create and add an ListViewItem widget.
 		int countCountries = mDatabase.countCountries();
 		for (int index = 0; index < countCountries; index++)
 		{
+			// If index is invalid skip this country.
 			Country* country = mDatabase.getCountryByIndex(index);
 			if (!country)
 			{
 				continue;
 			}
+
+			// If country's name is an empty string skip this country.
 			MAUtil::String countryName = country->getName();
 			if (countryName.length() == 0)
 			{
 				continue;
 			}
+
+			// Check if current country can go into current section.
 			if (!section || countryName[0] != sectionTitle[0])
 			{
+				// Create new section.
 				sectionTitle[0] = countryName[0];
 				section = new NativeUI::ListViewSection(
 					NativeUI::LIST_VIEW_SECTION_TYPE_ALPHABETICAL);
@@ -174,6 +184,7 @@ namespace EuropeanCountries
 				mListView->addChild(section);
 			}
 
+			// Create and add list item for this country.
 			NativeUI::ListViewItem* item = new NativeUI::ListViewItem();
 			item->setText(countryName);
 			item->setFontColor(COLOR_WHITE);
@@ -186,4 +197,3 @@ namespace EuropeanCountries
 	}
 
 } // end of EuropeanCountries
-

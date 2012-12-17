@@ -23,12 +23,13 @@
  * @brief NativeUI Screen used to show country info.
  */
 
-#ifndef COUNTRY_INFO_SCREEN_H_
-#define COUNTRY_INFO_SCREEN_H_
+#ifndef EC_COUNTRY_INFO_SCREEN_H_
+#define EC_COUNTRY_INFO_SCREEN_H_
 
 #include <NativeUI/ButtonListener.h>
 #include <NativeUI/Screen.h>
 
+// Forward declaration for NativeUI namespace classes.
 namespace NativeUI
 {
 	class Button;
@@ -42,9 +43,13 @@ namespace NativeUI
 namespace EuropeanCountries
 {
 
+	// Forward declaration for EuropeanCountries namespace classes.
 	class Country;
 	class CountryInfoScreenObserver;
 
+	/**
+	 * Screen used to show information about a country.
+	 */
 	class CountryInfoScreen:
 		public NativeUI::Screen,
 		public NativeUI::ButtonListener
@@ -141,7 +146,6 @@ namespace EuropeanCountries
 		void createDisclaimerButton();
 
 	private:
-
 		/**
 		 * Will be notified when user taps the back button.
 		 */
@@ -237,4 +241,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* COUNTRY_INFO_SCREEN_H_ */
+#endif /* EC_COUNTRY_INFO_SCREEN_H_ */

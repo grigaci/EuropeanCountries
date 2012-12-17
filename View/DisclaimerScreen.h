@@ -23,12 +23,13 @@
  * @brief NativeUI Screen used to show the disclaimer text.
  */
 
-#ifndef COUNTRIES_DISCLAIMER_SCREEN_H_
-#define COUNTRIES_DISCLAIMER_SCREEN_H_
+#ifndef EC_COUNTRIES_DISCLAIMER_SCREEN_H_
+#define EC_COUNTRIES_DISCLAIMER_SCREEN_H_
 
 #include <NativeUI/ButtonListener.h>
 #include <NativeUI/Screen.h>
 
+// Forward declaration for NativeUI namespace classes.
 namespace NativeUI
 {
 	class ImageButton;
@@ -41,8 +42,12 @@ namespace NativeUI
 namespace EuropeanCountries
 {
 
+	// Forward declaration for EuropeanCountries namespace classes.
 	class DisclaimerScreenObserver;
 
+	/**
+	 * @brief Screen used to show the application disclaimer.
+	 */
 	class DisclaimerScreen:
 		public NativeUI::Screen,
 		public NativeUI::ButtonListener
@@ -91,7 +96,6 @@ namespace EuropeanCountries
 		void createDisclaimerLabel();
 
 	private:
-
 		/**
 		 * Observer for this screen.
 		 * Will be notified when back button is pressed.
@@ -127,5 +131,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-
-#endif /* COUNTRIES_DISCLAIMER_SCREEN_H_ */
+#endif /* EC_COUNTRIES_DISCLAIMER_SCREEN_H_ */

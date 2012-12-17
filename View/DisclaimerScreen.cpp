@@ -30,17 +30,17 @@
 #define LABEL_MAX_LINES 50
 #define DISCLAIMER_TEXT "This application uses information from Wikipedia: http://en.wikipedia.org/wiki/List_of_sovereign_states_and_dependent_territories_in_Europe and the specific link for each covered country."
 
-#include <NativeUI/Label.h>
+#include <NativeUI/HorizontalLayout.h>
 #include <NativeUI/Image.h>
 #include <NativeUI/ImageButton.h>
-#include <NativeUI/HorizontalLayout.h>
+#include <NativeUI/Label.h>
 #include <NativeUI/RelativeLayout.h>
 #include <NativeUI/VerticalLayout.h>
 
 #include "DisclaimerScreen.h"
 #include "DisclaimerScreenObserver.h"
-#include "ViewUtils.h"
 #include "MAHeaders.h"
+#include "ViewUtils.h"
 
 namespace EuropeanCountries
 {
@@ -89,6 +89,7 @@ namespace EuropeanCountries
 	 */
 	void DisclaimerScreen::createUI()
 	{
+		// Create and add layout to the screen.
 		mMainLayout = new NativeUI::RelativeLayout();
 		this->setMainWidget(mMainLayout);
 
@@ -119,6 +120,7 @@ namespace EuropeanCountries
 	 */
 	void DisclaimerScreen::createTitleBar()
 	{
+		// Create and add layout for title bar.
 		mTitleBarHeight = gScreenHeight / TITLE_BAR_HEIGHT_PERCENTAGE;
 		mTitleBarLayout = new NativeUI::HorizontalLayout();
 		mTitleBarLayout->setLeftPosition(0);
@@ -129,6 +131,9 @@ namespace EuropeanCountries
 
 		if (!isAndroid())
 		{
+			// For WP7 and iOS platforms add a back button that should be
+			// used to navigate back to previous screen.
+			// On Android platform the device's back button should be used.
 			mBackButton = new NativeUI::ImageButton();
 			mBackButton->setHeight(mTitleBarHeight);
 			mBackButton->setImage(R_BACK_BUTTON);
@@ -139,6 +144,7 @@ namespace EuropeanCountries
 			mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		}
 
+		// Create and add screen title label.
 		mTitleLabel = new NativeUI::Label();
 		mTitleLabel->setTextHorizontalAlignment(MAW_ALIGNMENT_CENTER);
 		mTitleLabel->setTextVerticalAlignment(MAW_ALIGNMENT_CENTER);
@@ -148,6 +154,7 @@ namespace EuropeanCountries
 		mTitleLabel->setText(SCREEN_TITLE);
 		mTitleBarLayout->addChild(mTitleLabel);
 
+		// Add spacer so the title label will be centered.
 		if (!isAndroid())
 		{
 			mTitleBarLayout->addChild(
@@ -161,11 +168,13 @@ namespace EuropeanCountries
 	 */
 	void DisclaimerScreen::createDisclaimerLabel()
 	{
+		// Calculate label position and size.
 		int labelTopPosition = mTitleBarHeight;
 		int labelLeftPosition = gScreenWidth * PADDING_LEFT_PERCENTAGE / 100;
 		int labelHeight = gScreenHeight - labelTopPosition;
 		int labelWidth = gScreenWidth - labelLeftPosition;
 
+		// Create and add the label.
 		NativeUI::Label* label = new NativeUI::Label();
 		label->setTopPosition(labelTopPosition);
 		label->setLeftPosition(labelLeftPosition);

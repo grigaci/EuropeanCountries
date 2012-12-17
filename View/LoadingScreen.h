@@ -38,6 +38,9 @@ namespace NativeUI
 namespace EuropeanCountries
 {
 
+	/**
+	 * @brief Show an ActivityIndicator to the user.
+	 */
 	class LoadingScreen:
 		public NativeUI::Screen
 	{

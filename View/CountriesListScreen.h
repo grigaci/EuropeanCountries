@@ -23,14 +23,14 @@
  * @brief NativeUI Screen used to show a list of countries.
  */
 
-#ifndef COUNTRIES_LIST_SCREEN_H_
-#define COUNTRIES_LIST_SCREEN_H_
+#ifndef EC_COUNTRIES_LIST_SCREEN_H_
+#define EC_COUNTRIES_LIST_SCREEN_H_
 
 #include <NativeUI/Screen.h>
 #include <NativeUI/ListViewListener.h>
 #include <MAUtil/Map.h>
 
-// Forward declarations.
+// Forward declaration for NativeUI namespace classes.
 namespace NativeUI
 {
 	class ListView;
@@ -39,10 +39,13 @@ namespace NativeUI
 
 namespace EuropeanCountries
 {
-
+	// Forward declaration for EuropeanCountries namespace classes.
 	class ICountryDatabase;
 	class CountriesListScreenObserver;
 
+	/**
+	 * @brief Screen used to show a list of countries.
+	 */
 	class CountriesListScreen:
 		public NativeUI::Screen,
 		public NativeUI::ListViewListener
@@ -134,7 +137,7 @@ namespace EuropeanCountries
 		NativeUI::ListView* mListView;
 
 		/**
-		 * Store a pair of:
+		 * Store pairs of:
 		 * - key: ListViewItem handle.
 		 * - value: Country's id used to populate the ListViewItem.
 		 */
@@ -144,4 +147,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* COUNTRIES_LIST_SCREEN_H_ */
+#endif /* EC_COUNTRIES_LIST_SCREEN_H_ */

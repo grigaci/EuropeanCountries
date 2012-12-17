@@ -23,12 +23,15 @@
  * @brief Observer for CountriesListScreen.
  */
 
-#ifndef COUNTRIES_LIST_SCREEN_OBSERVER_H_
-#define COUNTRIES_LIST_SCREEN_OBSERVER_H_
+#ifndef EC_COUNTRIES_LIST_SCREEN_OBSERVER_H_
+#define EC_COUNTRIES_LIST_SCREEN_OBSERVER_H_
 
 namespace EuropeanCountries
 {
 
+	/**
+	 * @brief Observer for CountriesListScreen.
+	 */
 	class CountriesListScreenObserver
 	{
 	public:
@@ -39,6 +42,7 @@ namespace EuropeanCountries
 		 */
 		virtual void showCountryInfoScreen(const int countryID) = 0;
 	};
+
 } // end of EuropeanCountries
 
-#endif /* COUNTRIES_LIST_SCREEN_OBSERVER_H_ */
+#endif /* EC_COUNTRIES_LIST_SCREEN_OBSERVER_H_ */

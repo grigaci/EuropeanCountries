@@ -38,16 +38,16 @@
 
 #include <NativeUI/Button.h>
 #include <NativeUI/HorizontalLayout.h>
-#include <NativeUI/Label.h>
 #include <NativeUI/Image.h>
 #include <NativeUI/ImageButton.h>
+#include <NativeUI/Label.h>
 #include <NativeUI/RelativeLayout.h>
 #include <NativeUI/VerticalLayout.h>
 
-#include "MAHeaders.h"
-#include "ViewUtils.h"
 #include "CountryInfoScreen.h"
 #include "CountryInfoScreenObserver.h"
+#include "MAHeaders.h"
+#include "ViewUtils.h"
 #include "../Model/Country.h"
 
 namespace EuropeanCountries
@@ -77,6 +77,7 @@ namespace EuropeanCountries
 		{
 			initScreenSizeConstants(this->getWidth(), this->getHeight());
 		}
+
 		this->createUI();
 
 		if (isAndroid())
@@ -113,6 +114,7 @@ namespace EuropeanCountries
 	{
 		if (isIOS())
 		{
+			// Scroll to the top of the screen.
 			mInfoLayoutRelative->setContentOffset(0, 0);
 			mBackButton->setImage(R_BACK_BUTTON);
 		}
@@ -158,6 +160,7 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::createUI()
 	{
+		// Create and add layout to the screen.
 		mMainLayout = new NativeUI::RelativeLayout();
 		this->setMainWidget(mMainLayout);
 
@@ -165,6 +168,7 @@ namespace EuropeanCountries
 
 		if (isAndroid())
 		{
+			// For Android platform create a layout that will hold widgets.
 			mDataLayout = new NativeUI::VerticalLayout();
 			mDataLayout->setHeight(gScreenHeight);
 			mDataLayout->setWidth(gScreenWidth);
@@ -215,6 +219,7 @@ namespace EuropeanCountries
 	 */
 	void CountryInfoScreen::createTitleBar()
 	{
+		// Create and add layout that will hold all title bar related widgets.
 		int barHeight = gScreenHeight / TITLE_BAR_HEIGHT_PERCENTAGE;
 		if (barHeight > MAX_TITLE_BAR_HEIGHT)
 		{
@@ -229,6 +234,8 @@ namespace EuropeanCountries
 
 		if (!isAndroid())
 		{
+			// Add back button only for iOS and WP7 platforms.
+			// On Android platform the device's back button will be used.
 			mBackButton = new NativeUI::ImageButton();
 			mBackButton->setHeight(barHeight);
 			mBackButton->setImage(R_BACK_BUTTON);
@@ -239,6 +246,7 @@ namespace EuropeanCountries
 			mTitleBarLayout->setProperty(MAW_WIDGET_BACKGROUND_COLOR, gTitleBackgroundColor);
 		}
 
+		// Create and add label that will display the country name.
 		mNameLabel = new NativeUI::Label();
 		mNameLabel->setTextHorizontalAlignment(MAW_ALIGNMENT_CENTER);
 		mNameLabel->setTextVerticalAlignment(MAW_ALIGNMENT_CENTER);
@@ -249,15 +257,19 @@ namespace EuropeanCountries
 
 		if (!isAndroid())
 		{
+			// Add disclaimer button only on iOS and WP7 platforms.
+			// On Android the button will be added at the bottom of the screen.
 			mDisclaimerTitleBarButton = new NativeUI::ImageButton();
 			mDisclaimerTitleBarButton->setHeight(barHeight);
 			mDisclaimerTitleBarButton->setImage(R_DISCLAIMER_BUTTON);
 
 			if (isIOS())
 			{
+				// Add spacer.
 				int spacerWidth = mBackButton->getWidth() - barHeight;
 				mTitleBarLayout->addChild(createSpacer(mNameLabel->getHeight(), spacerWidth));
 			}
+
 			mTitleBarLayout->addChild(mDisclaimerTitleBarButton);
 		}
 	}
@@ -413,4 +425,3 @@ namespace EuropeanCountries
 	}
 
 } // end of EuropeanCountries
-

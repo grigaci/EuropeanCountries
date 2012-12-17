@@ -23,8 +23,8 @@
  * @brief Util methods and constants for NativeUI widgets.
  */
 
-#ifndef VIEW_UTILS_H_
-#define VIEW_UTILS_H_
+#ifndef EC_VIEW_UTILS_H_
+#define EC_VIEW_UTILS_H_
 
 #define COLOR_BLACK 0x000000
 #define COLOR_WHITE 0xFFFFFF
@@ -55,9 +55,9 @@ namespace EuropeanCountries
 	 */
 	enum PlatformType
 	{
-		PlatformTypeAndroid = 0,//!< PlatformTypeAndroid
-		PlatformTypeiOS,        //!< PlatformTypeiOS
-		PlatformTypeWP7         //!< PlatformTypeWP7
+		PlatformTypeAndroid = 0,
+		PlatformTypeiOS,
+		PlatformTypeWP7
 	};
 
 	extern PlatformType gPlatformType;
@@ -135,4 +135,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* VIEW_UTILS_H_ */
+#endif /* EC_VIEW_UTILS_H_ */

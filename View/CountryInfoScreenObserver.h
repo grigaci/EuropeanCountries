@@ -23,11 +23,15 @@
  * @brief Observer for CountryInfoScreenObserver.
  */
 
-#ifndef COUNTRY_INFO_SCREEN_OBSERVER_H_
-#define COUNTRY_INFO_SCREEN_OBSERVER_H_
+#ifndef EC_COUNTRY_INFO_SCREEN_OBSERVER_H_
+#define EC_COUNTRY_INFO_SCREEN_OBSERVER_H_
 
 namespace EuropeanCountries
 {
+
+	/**
+	 * @brief Observer for CountryInfoScreenObserver.
+	 */
 	class CountryInfoScreenObserver
 	{
 	public:
@@ -46,4 +50,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* COUNTRY_INFO_SCREEN_OBSERVER_H_ */
+#endif /* EC_COUNTRY_INFO_SCREEN_OBSERVER_H_ */

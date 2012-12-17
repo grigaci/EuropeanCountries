@@ -23,11 +23,14 @@
  * @brief Observer for DisclaimerScreen.
  */
 
-#ifndef DISCLAIMER_SCREEN_OBSERVER_H_
-#define DISCLAIMER_SCREEN_OBSERVER_H_
+#ifndef EC_DISCLAIMER_SCREEN_OBSERVER_H_
+#define EC_DISCLAIMER_SCREEN_OBSERVER_H_
 
 namespace EuropeanCountries
 {
+	/**
+	 * Observer for DisclaimerScreen.
+	 */
 	class DisclaimerScreenObserver
 	{
 	public:
@@ -40,4 +43,4 @@ namespace EuropeanCountries
 
 } // end of EuropeanCountries
 
-#endif /* DISCLAIMERSCREENOBSERVER_H_ */
+#endif /* EC_DISCLAIMER_SCREEN_OBSERVER_H_ */
